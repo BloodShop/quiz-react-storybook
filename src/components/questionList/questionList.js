@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AddQuestion from '../addQuestion/addQuestion';
+import { Secondary, Success } from '../button/button.stories';
 import ExamResult from '../examResult/examResult';
 import Question from '../question/question';
 import style from '../question/question.module.css';
@@ -34,7 +35,7 @@ export default function QuestionList() {
         {
             id: 3,
             title: 'What was the last thing you`ve done?',
-            description: 'you had wasted time on something before you shitty work, what would it be?',
+            description: 'you had wasted time on something before your shitty work, what would it be?',
             answers: [
                 { txt: 'Kill myself', selected: false },
                 { txt: 'Dream of a better lecturer', selected: false },
@@ -104,12 +105,12 @@ export default function QuestionList() {
 
     return (
         <>
-            <div className={`row row-cols-1 row-cols-md-3 g-4 ${styleSubmit}`}>
+            <div className={`row row-cols-md-1 g-4 ${styleSubmit}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!styleSubmit} />)}
             </div>
-            <button onClick={onSubmit} className='btn btn-primary m-1'>Submit Exam ✅</button>
-            <button onClick={onReset} className='btn btn-secondary m-1'>Reset Answers ⌛</button>
+            <Success onClick={onSubmit} >Submit Exam ✅</Success>
+            <Secondary onClick={onReset} >Reset Answers ⌛</Secondary>
             <ExamResult correctAnswers={correctAnswers} totalQuestions={questionsLength}/>
             <AddQuestion onAdd={addQuestionHandler}/>
         </>

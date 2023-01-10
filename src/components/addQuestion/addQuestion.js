@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import AnswerInputs from '../answerInputs/answerInputs';
+import { Primary } from '../button/button.stories';
+import { Large, Medium, Small } from '../input/input.stories';
 
 export default function AddQuestion({ onAdd }) {
 
@@ -37,14 +39,14 @@ export default function AddQuestion({ onAdd }) {
 
     return (
         <div className='col card p-40'>
-            <h2 className='card-header'>Add Question</h2>
+            <h2 className='card-header' >Add Question</h2>
             <label>Title:
-                <input name='title' type='text' onInput={addQuestionHandler} />
+                <Large name='title' type='text' onInput={addQuestionHandler} />
             </label>
             <label className='m-2 p-1' htmlFor='description'>Description:</label>
                 <textarea className='m-2' name='description' onInput={addQuestionHandler} />
             <AnswerInputs onInput={addQuestionHandler} onAdd={onAdd} question={question} />
-            <button onClick={() => onAdd(question)} className='btn btn-primary m-5'>Add Question</button>
+            <Primary onClick={() => onAdd(question)}>Add Question</Primary>
         </div>
     );
 }
