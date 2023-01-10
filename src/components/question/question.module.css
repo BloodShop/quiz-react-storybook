@@ -1,0 +1,24 @@
+div.inline {
+    display: inline-flex;
+}
+
+div.inline > * {
+    display: block;
+    margin: 20px;
+}
+
+.submitted .wrong {
+    background: red;
+}
+
+.submitted .correct {
+    background: greenyellow;
+}
+
+.non_display {
+    display: none !important;
+}
+
+.display {
+    display: inline-block;
+}
