@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import AddQuestion from '../addQuestion/addQuestion';
 import { Secondary, Success } from '../button/button.stories';
-import ExamResult from '../examResult/examResult';
 import Question from '../question/question';
 import style from '../question/question.module.css';
+import { Outlet, useNavigate } from 'react-router-dom';
+import ExamResult from '../../examResult/examResult';
 
-export default function QuestionList() {
+export default function QuestionList({ questions, setQuestions }) {
 
-    const [questions, setQuestions] = useState([
+    /* const [questions, setQuestions] = useState([
         {
             id: 1,
             title: 'Just the first question',
@@ -15,10 +16,10 @@ export default function QuestionList() {
             answers: [
                 { txt: 'Football', selected: false },
                 { txt: 'Learn c#', selected: false },
-                { txt: 'cs-go', selected: false },
+                { txt: 'play cs-go', selected: false },
                 { txt: 'sleep', selected: false }
             ],
-            correctAnswer: 'cs-go'
+            correctAnswer: 'play cs-go'
         },
         {
             id: 2,
@@ -38,13 +39,13 @@ export default function QuestionList() {
             description: 'you had wasted time on something before your shitty work, what would it be?',
             answers: [
                 { txt: 'Kill myself', selected: false },
-                { txt: 'Dream of a better lecturer', selected: false },
-                { txt: 'Send nudes to my crash', selected: false },
+                { txt: 'Dream of a better friend', selected: false },
+                { txt: 'Send nudes to my crush', selected: false },
                 { txt: 'I would think of how could I encourage my friends go to educate at Sela College', selected: false }
             ],
-            correctAnswer: 'Send nudes to my crash'
+            correctAnswer: 'Send nudes to my crush'
         },
-    ]);
+    ]); */
     const [correctAnswers, setCorrentAnswer] = useState(0);
     const [questionsLength, setQuestionsLength] = useState(questions.length);
     const [styleSubmit, setStyleSubmit] = useState('');
@@ -80,8 +81,22 @@ export default function QuestionList() {
 
     const onSubmit = () => {
         /* debugger; */
-        checkQuestions(questions);
-        setStyleSubmit(style.submitted);
+        const none = (arr, callback) => !arr.some(callback);
+        let confirmed;
+        none(questions, q => {
+            if(none(q.answers, a => a.selected)) {
+                if (window.confirm('Not all questions are answered dumbass!\nAre you sure you want to submit the exam?!')) {
+                    confirmed = true;
+                }
+                return true;
+            };
+            return false;
+        });
+        if (confirmed) {
+            checkQuestions(questions);
+            setStyleSubmit(style.submitted);
+        }
+        /* navigate('result', { replace: true }); */
 
         /* document.querySelector('[name="results"]').innerHTML = `<div>${correctAnswers} / ${length}</div>
             <div>Final Result: ${(correctAnswers / length * 100)}</div>`; */
@@ -103,9 +118,9 @@ export default function QuestionList() {
         setQuestionsLength(quests.length);
     }
 
+    const navigate = useNavigate();
     return (
-        <div className='App'>
-            <h1>Exam</h1>
+        <>
             <div className={`row row-cols-md-1 g-4 ${styleSubmit}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!styleSubmit} />)}
@@ -114,6 +129,7 @@ export default function QuestionList() {
             <Secondary onClick={onReset} >Reset Answers ⌛</Secondary>
             <ExamResult correctAnswers={correctAnswers} totalQuestions={questionsLength}/>
             <AddQuestion onAdd={addQuestionHandler}/>
-        </div>
+            <Outlet />
+        </>
     );
 }

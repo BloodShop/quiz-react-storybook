@@ -5,7 +5,6 @@ import { Large, Medium, Small } from '../input/input.stories';
 
 export default function AddQuestion({ onAdd }) {
 
-
     const [question, setQuestion] = useState({
         title: '',
         description: '',
@@ -38,7 +37,7 @@ export default function AddQuestion({ onAdd }) {
     }
 
     return (
-        <div className='App col card p-40'>
+        <div className='col card p-40'>
             <h2 className='card-header' >Add Question</h2>
             <label>Title:
                 <Large name='title' type='text' onInput={addQuestionHandler} />
