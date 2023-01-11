@@ -17,9 +17,13 @@ export const parameters = {
   },
 }
 
-addDecorator(story => (
-  <ThemeProvider theme={theme}>
-    <CSSReset />
-    <Box m='4'>{story()}</Box>
-  </ThemeProvider>
-));
+export const decorators = [
+  (Story => (
+    <ThemeProvider theme={theme}>
+      <CSSReset />
+      <Box m='4'>
+        <Story />
+      </Box>
+    </ThemeProvider>
+  ))
+];
