@@ -104,7 +104,8 @@ export default function QuestionList() {
     }
 
     return (
-        <>
+        <div className='App'>
+            <h1>Exam</h1>
             <div className={`row row-cols-md-1 g-4 ${styleSubmit}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!styleSubmit} />)}
@@ -113,6 +114,6 @@ export default function QuestionList() {
             <Secondary onClick={onReset} >Reset Answers ⌛</Secondary>
             <ExamResult correctAnswers={correctAnswers} totalQuestions={questionsLength}/>
             <AddQuestion onAdd={addQuestionHandler}/>
-        </>
+        </div>
     );
 }
