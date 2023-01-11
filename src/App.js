@@ -20,7 +20,7 @@ export default function App() {
       id: 1,
       title: 'exam1 - Dodge Game',
       releasedDate: Date.now(),
-      description: '',
+      description: 'LoL Dodge Game is a training tool for famous moba games like League of Legends you can improve your mechanics or just warmup by playing one of our Games.',
       questions: [
       {
           id: 1,
@@ -104,6 +104,9 @@ export default function App() {
     },
 ]);
 
+  console.log(exams);
+
+
   return (
     <>
       <Navbar />
@@ -111,17 +114,18 @@ export default function App() {
         <Route path='/' element={<HomePage />} />
 
         <Route path='exams' element={<ExamsPage exams={exams} setExams={setExams} />}>
-          <Route index element={<ExamResult />} />
-          <Route path='exams/:id' element={<ExamPage /* exam={exam} setExam={setExam} */ />}>
-            <Route path='add-question' element={<AddQuestion />}>
-          </Route>
-          <Route path='result' element={<ExamResult />} />
-        </Route>
-
-          {/* <Route index element={<FeaturedExams />} /> */}
+          {/* <Route index element={<ExamResult />} /> */}
           <Route path='featured' element={<FeaturedExams />} />
           <Route path='new' element={<NewExams />} />
         </Route>
+
+        <Route path='exams/:id' element={<ExamPage exams={exams} /* setExam={setExam} */ />}>
+          <Route path='add-question' element={<AddQuestion />}/>
+          {/* <Route path='result' element={<ExamResult />} /> */}
+        </Route>
+
+        <Route path='exams/:id/result' element={<ExamResult /* setExam={setExam} */ />} />
+
         <Route path='*' element={<NoMatch />} />
       </Routes>
     </>
