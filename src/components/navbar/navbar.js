@@ -18,9 +18,9 @@ export default function Navbar() {
         <NavLink style={navLinkStyles} to='/exams'>
             Exams
         </NavLink>
-        {/* <NavLink style={navLinkStyles} to='/exam'>
-            Exam Page
-        </NavLink> */}
+        <NavLink style={navLinkStyles} to='/add-exam'>
+            Add Exam
+        </NavLink>
     </nav>
   )
 }

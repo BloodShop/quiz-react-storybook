@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { Primary } from '../button/button.stories';
 import { Large, Medium, Small } from '../input/input.stories';
 
-export default function AddQuestion({ onAdd }) {
+export default function AddQuestion(/* { onAdd } */) {
 
+    const { id } = useParams();
     const [question, setQuestion] = useState({
         title: '',
         description: '',
@@ -16,6 +18,18 @@ export default function AddQuestion({ onAdd }) {
         ],
         correctAnswer: '-1'
     });
+
+    const onAdd = (question) => {
+        /* Question validation */
+        if (question.title === '' || question.description === '' || question.answers.length !== 4 ||
+            !question.answers.some(a => a.txt === question.correctAnswer) ||
+            question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
+
+        const newQuestion = {id: Math.round(Math.random() * 100000) ,...question}/* ,
+            newQuestions = [...questions, newQuestion]; */
+        /* setQuestions(newQuestions);
+        checkQuestions(newQuestions); */
+    }
 
     const addQuestionHandler = (e) => {
         const newQuestion = {...structuredClone(question)},
@@ -33,11 +47,12 @@ export default function AddQuestion({ onAdd }) {
             newQuestion[e.target.name] = txt;
         }
 
+
         setQuestion(newQuestion);
     }
 
     return (
-        <div className='col card p-40'>
+        <div className='App col card p-40'>
             <h2 className='card-header' >Add Question</h2>
             <label>Title:
                 <Large name='title' type='text' onInput={addQuestionHandler} />

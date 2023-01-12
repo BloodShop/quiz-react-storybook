@@ -13,9 +13,10 @@ import { FeaturedExams } from './components/examsPage/featuredExams';
 import { NewExams } from './components/examsPage/newExams';
 import { useState } from 'react';
 import HomePage from './components/homePage/homePage';
+import AddExam from './components/addExam/addExam';
 
 export default function App() {
-  const [exams, setExams] = useState([
+  /* const [exams, setExams] = useState([
     {
       id: 1,
       title: 'exam1 - Dodge Game',
@@ -102,10 +103,7 @@ export default function App() {
           correctAnswer: 'Send nudes to my crush'
       }]
     },
-]);
-
-  console.log(exams);
-
+]); */
 
   return (
     <>
@@ -113,18 +111,17 @@ export default function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
 
-        <Route path='exams' element={<ExamsPage exams={exams} setExams={setExams} />}>
+        <Route path='exams' element={<ExamsPage />}>
           {/* <Route index element={<ExamResult />} /> */}
           <Route path='featured' element={<FeaturedExams />} />
           <Route path='new' element={<NewExams />} />
         </Route>
 
-        <Route path='exams/:id' element={<ExamPage exams={exams} /* setExam={setExam} */ />}>
-          <Route path='add-question' element={<AddQuestion />}/>
-          {/* <Route path='result' element={<ExamResult />} /> */}
-        </Route>
-
+        <Route path='exams/:id' element={<ExamPage /* setExam={setExam} */ />} />
+        <Route path='exams/:id/add-question' element={<AddQuestion />}/>
         <Route path='exams/:id/result' element={<ExamResult /* setExam={setExam} */ />} />
+
+        <Route path='add-exam' element={<AddExam />} />
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
