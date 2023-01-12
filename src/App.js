@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import QuestionList from './components/examPage/questionList/questionList';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Routes } from 'react-router-dom';
 import AddQuestion from './components/examPage/addQuestion/addQuestion';
@@ -11,9 +10,16 @@ import ExamPage from './components/examPage/examPage';
 import ExamsPage from './components/examsPage/examsPage';
 import { FeaturedExams } from './components/examsPage/featuredExams';
 import { NewExams } from './components/examsPage/newExams';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import HomePage from './components/homePage/homePage';
 import AddExam from './components/addExam/addExam';
+import Users from './components/users/users';
+import EditUser from './components/users/editUser/editUser';
+import Profile from './components/profile/profile';
+import { AuthProvider } from './components/auth/auth';
+import Login from './components/auth/login';
+import RequireAuth from './components/auth/requireAuth';
+const LazyAbout = React.lazy(() => import('./components/aboutPage/about'));
 
 export default function App() {
   /* const [exams, setExams] = useState([
@@ -106,10 +112,17 @@ export default function App() {
 ]); */
 
   return (
-    <div id='root'>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
+
+        <Route path='about'
+          element={
+            <React.Suspense fallback='Loading...'>
+              <LazyAbout />
+            </React.Suspense>
+          } />
 
         <Route path='exams' element={<ExamsPage />}>
           {/* <Route index element={<ExamResult />} /> */}
@@ -121,10 +134,16 @@ export default function App() {
         <Route path='exams/:id/add-question' element={<AddQuestion />}/>
         <Route path='exams/:id/result' element={<ExamResult /* setExam={setExam} */ />} />
 
-        <Route path='add-exam' element={<AddExam />} />
+        <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
+
+        <Route path='users' element={<RequireAuth><Users /></RequireAuth>} />
+        <Route path='users/:id' element={<EditUser />} />
+
+        <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
+        <Route path='login' element={<Login />} />
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
-    </div>
+    </AuthProvider>
   );
 }

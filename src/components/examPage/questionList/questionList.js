@@ -5,6 +5,7 @@ import Question from '../question/question';
 import style from '../question/question.module.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ExamResult from '../../examResult/examResult';
+import { useAuth } from '../../auth/auth';
 
 export default function QuestionList({ questionsP }) {
 
@@ -46,17 +47,19 @@ export default function QuestionList({ questionsP }) {
             correctAnswer: 'Send nudes to my crush'
         },
     ]); */
-    const [correctAnswers, setCorrectAnswer] = useState(0);
-    const [questions, setQuestions] = useState(questionsP);
-    const [questionsLength, setQuestionsLength] = useState(questions.length);
-    const [styleSubmit, setStyleSubmit] = useState('');
+    const [correctAnswers, setCorrectAnswer] = useState(0),
+        [questions, setQuestions] = useState(questionsP),
+        [questionsLength, setQuestionsLength] = useState(questions.length),
+        [styleSubmit, setStyleSubmit] = useState(''),
+        navigate = useNavigate(),
+        auth = useAuth();
+
     const changeHandler = (question) => {
         let questionIndex = questions.findIndex(q => q.id === question.id);
         let newQuestions = [...questions];
         newQuestions[questionIndex] = question;
         setQuestions(newQuestions);
     }
-    const navigate = useNavigate();
 
     const removeHandler = (id) => {
         /* debugger; */
@@ -82,14 +85,14 @@ export default function QuestionList({ questionsP }) {
     }
 
     const onSubmit = () => {
-        /* debugger; */
+        debugger;
         const none = (arr, callback) => !arr.some(callback);
-        let confirmed;
+        let confirmed = true;
 
         none(questions, q => {
             if(none(q.answers, a => a.selected)) {
-                if (window.confirm('Not all questions are answered dumbass!\nAre you sure you want to submit the exam?!')) {
-                    confirmed = true;
+                if (!window.confirm('Not all questions are answered dumbass!\nAre you sure you want to submit the exam?!')) {
+                    confirmed = false;
                 }
                 return true;
             };
@@ -119,7 +122,6 @@ export default function QuestionList({ questionsP }) {
         setQuestionsLength(quests.length);
     }
 
-
     return (
         <>
             <div className={`row row-cols-md-1 g-4 ${styleSubmit}`}>
@@ -129,7 +131,7 @@ export default function QuestionList({ questionsP }) {
             <Success onClick={onSubmit} >Submit Exam ✅</Success>
             <Secondary onClick={onReset} >Reset Answers ⌛</Secondary>
             {/* <ExamResult correctAnswers={correctAnswers} totalQuestions={questionsLength}/> */}
-            <AddQuestion onAdd={addQuestionHandler}/>
+            {auth.user && <AddQuestion onAdd={addQuestionHandler}/>}
             <Outlet />
         </>
     );

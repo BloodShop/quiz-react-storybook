@@ -133,7 +133,7 @@ export default function ExamsPage() {
     } */
 
     return (
-        <>
+        <div className='App'>
             <div>
                 <Large type='search' placeholder='Search Exam By Name' />
             </div>
@@ -155,6 +155,6 @@ export default function ExamsPage() {
             </div>
             <Success onClick={addExam}>Add Exam</Success>
             {/* <Outlet /> */}
-        </>
+        </div>
     )
 }

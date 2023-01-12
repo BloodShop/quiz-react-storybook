@@ -8,6 +8,7 @@ const apiUrl = process.env.REACT_APP_SERVER_URL,
 export default class ExamService {
 
     responseHandler(res) {
+
         if (res.ok) {
             return res.json();
         } else {
@@ -16,12 +17,14 @@ export default class ExamService {
     }
 
     getExams() {
+
         return fetch(baseUrl, { headers: defaultHeaders })
             .then(this.responseHandler);
     }
 
     getExamById(id) {
-        return fetch(`${baseUrl}/${id}`, { headers: defaultHeaders })
+
+        return fetch(`${baseUrl}${id}`, { headers: defaultHeaders })
             .then(this.responseHandler);
     }
 
@@ -45,12 +48,13 @@ export default class ExamService {
             body: JSON.stringify(exam)
         };
 
-        return fetch(`${baseUrl}/${exam.id}`, requestOptions)
+        return fetch(`${baseUrl}${exam.id}`, requestOptions)
             .then(this.responseHandler);
     }
 
     deleteExam(examId) {
-        return fetch(`${baseUrl}/${examId}`, { method: 'DELETE', headers: defaultHeaders })
+
+        return fetch(`${baseUrl}${examId}`, { method: 'DELETE', headers: defaultHeaders })
             .then(this.responseHandler);
     }
 }

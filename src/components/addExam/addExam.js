@@ -13,21 +13,26 @@ export default function AddExam() {
     const titleRef = useRef(),
         descriptionRef = useRef();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let newExam = {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        /* let newExam = {
             title: titleRef.current.value,
             description: descriptionRef.current.value,
             releasedDate: Date.now(),
             questions: []
-        }
+        } */
 
-        service.postExam({ ...newExam, id: 0 })
+        service.postExam({ ...exam, id: 0, releasedDate: Date.now(), questions: [] })
             .then(data => navigate(`/exams/${data.id}`));
     }
 
-    const updateField = (event) => {
+    const updateField = (e) => {
+        const newExam = {...structuredClone(exam)};
+        newExam[e.target.name] = e.target.value;
+        console.log(e.target.name, newExam[e.target.name]);
 
+
+        setExam(newExam);
     }
 
     return (
@@ -37,11 +42,11 @@ export default function AddExam() {
             </header>
             <form className='col card p-40' onSubmit={handleSubmit}>
                 <label> Title:
-                    <Medium id='title' ref={titleRef} name='title' type='text' onChange={updateField} />
+                    <Medium id='title' ref={titleRef} name='title' type='text' onInput={updateField} />
                 </label>
 
                 <label className='m-2 p-1' htmlFor='description'> Description:</label>
-                <textarea id='description' ref={descriptionRef} className='m-2' name='description' />
+                <textarea id='description' ref={descriptionRef} className='m-2' name='description' onInput={updateField} />
 
                 <Success type="submit">Submit</Success>
             </form>
