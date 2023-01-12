@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/exams',
-    defaultHeaders = { 'Content-Type': 'application/json' };
+const apiUrl = process.env.REACT_APP_SERVER_URL,
+    examsRoute = process.env.REACT_APP_EXAMS_ROUTE,
+    defaultHeaders = { 'Content-Type': 'application/json' },
+    baseUrl = apiUrl + examsRoute;
 
 export default class ExamService {
 

@@ -106,7 +106,7 @@ export default function App() {
 ]); */
 
   return (
-    <>
+    <div id='root'>
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
@@ -125,6 +125,6 @@ export default function App() {
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
-    </>
+    </div>
   );
 }

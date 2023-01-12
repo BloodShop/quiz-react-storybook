@@ -22,9 +22,12 @@ export default function AddExam() {
             questions: []
         }
 
-        alert(titleRef.current.value + ' ' + descriptionRef.current.value)
         service.postExam({ ...newExam, id: 0 })
             .then(data => navigate(`/exams/${data.id}`));
+    }
+
+    const updateField = (event) => {
+
     }
 
     return (
@@ -34,7 +37,7 @@ export default function AddExam() {
             </header>
             <form className='col card p-40' onSubmit={handleSubmit}>
                 <label> Title:
-                    <Medium id='title' ref={titleRef} name='title' type='text' />
+                    <Medium id='title' ref={titleRef} name='title' type='text' onChange={updateField} />
                 </label>
 
                 <label className='m-2 p-1' htmlFor='description'> Description:</label>
