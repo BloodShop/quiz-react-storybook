@@ -5,10 +5,10 @@ const apiUrl = process.env.REACT_APP_SERVER_URL,
     defaultHeaders = { 'Content-Type': 'application/json' },
     baseUrl = apiUrl + examsRoute;
 
+/* axios api class */
 export default class UsersService {
 
     responseHandler(res) {
-
         if (res.ok) {
             return res.json();
         } else {

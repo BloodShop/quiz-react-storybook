@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -10,7 +11,6 @@ import ExamPage from './components/examPage/examPage';
 import ExamsPage from './components/examsPage/examsPage';
 import { FeaturedExams } from './components/examsPage/featuredExams';
 import { NewExams } from './components/examsPage/newExams';
-import React, { useState } from 'react';
 import HomePage from './components/homePage/homePage';
 import AddExam from './components/addExam/addExam';
 import Users from './components/users/users';
@@ -131,13 +131,13 @@ export default function App() {
         </Route>
 
         <Route path='exams/:id' element={<ExamPage /* setExam={setExam} */ />} />
-        <Route path='exams/:id/add-question' element={<AddQuestion />}/>
+        <Route path='exams/:id/add-question' element={<RequireAuth><AddQuestion /></RequireAuth>}/>
         <Route path='exams/:id/result' element={<ExamResult /* setExam={setExam} */ />} />
 
         <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
 
         <Route path='users' element={<RequireAuth><Users /></RequireAuth>} />
-        <Route path='users/:id' element={<EditUser />} />
+        <Route path='users/:id' element={<RequireAuth><EditUser /></RequireAuth>} />
 
         <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
         <Route path='login' element={<Login />} />

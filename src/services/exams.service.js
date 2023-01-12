@@ -5,10 +5,10 @@ const apiUrl = process.env.REACT_APP_SERVER_URL,
     defaultHeaders = { 'Content-Type': 'application/json' },
     baseUrl = apiUrl + examsRoute;
 
+/* fetch api class */
 export default class ExamService {
 
     responseHandler(res) {
-
         if (res.ok) {
             return res.json();
         } else {
@@ -17,19 +17,16 @@ export default class ExamService {
     }
 
     getExams() {
-
         return fetch(baseUrl, { headers: defaultHeaders })
             .then(this.responseHandler);
     }
 
     getExamById(id) {
-
         return fetch(`${baseUrl}${id}`, { headers: defaultHeaders })
             .then(this.responseHandler);
     }
 
     postExam(exam) {
-
         const requestOptions = {
             method: 'POST',
             headers: defaultHeaders,
@@ -41,7 +38,6 @@ export default class ExamService {
     }
 
     putExam(exam) {
-
         const requestOptions = {
             method: 'PUT',
             headers: defaultHeaders,
@@ -53,7 +49,6 @@ export default class ExamService {
     }
 
     deleteExam(examId) {
-
         return fetch(`${baseUrl}${examId}`, { method: 'DELETE', headers: defaultHeaders })
             .then(this.responseHandler);
     }
