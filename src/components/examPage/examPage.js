@@ -7,8 +7,8 @@ import ExamService from '../../services/exams.service';
 
 export default function ExamPage() {
 
-    const service = new ExamService();
-    const params = useParams(),
+    const service = new ExamService(),
+        params = useParams(),
         [exam, setExam] = useState();
 
     useEffect(() => {

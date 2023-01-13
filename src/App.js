@@ -19,6 +19,7 @@ import Profile from './components/profile/profile';
 import { AuthProvider } from './components/auth/auth';
 import Login from './components/auth/login';
 import RequireAuth from './components/auth/requireAuth';
+import EditQuestion from './components/examPage/editQuestion/editQuestion';
 const LazyAbout = React.lazy(() => import('./components/aboutPage/about'));
 
 export default function App() {
@@ -125,16 +126,16 @@ export default function App() {
           } />
 
         <Route path='exams' element={<ExamsPage />}>
-          {/* <Route index element={<ExamResult />} /> */}
+          {/* <Route index element={< />} />
           <Route path='featured' element={<FeaturedExams />} />
-          <Route path='new' element={<NewExams />} />
+          <Route path='new' element={<NewExams />} /> */}
         </Route>
 
         <Route path='exams/:id' element={<ExamPage />} >
-          <Route path='result' element={<ExamResult />} />
+          <Route path='result' element={<ExamResult key={Math.random()}/>} />
         </Route>
         <Route path='exams/:id/add-question' element={<RequireAuth><AddQuestion /></RequireAuth>}/>
-        {/* <Route path='exams/:id/result' element={<ExamResult />} /> */}
+        <Route path='exams/:id/edit-question/:qid' element={<RequireAuth><EditQuestion /></RequireAuth>}/>
 
         <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
 

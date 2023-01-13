@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Danger, Primary, Secondary, Success } from '../examPage/button/button.stories';
 import { useNavigate } from 'react-router-dom';
 import UsersService from '../../services/users.service';
+import { Large } from '../examPage/input/input.stories';
 
 export default function Users() {
 
     const [users, setUsers] = useState([]),
+        [query, setQuery] = useState(''),
         apiUrl = process.env.REACT_APP_SERVER_URL,
         examsRoute = process.env.REACT_APP_USERS_ROUTE,
         defaultHeaders = { 'Content-Type': 'application/json' },
@@ -49,17 +51,24 @@ export default function Users() {
 
     return (
         <div className='App'>
-            <div className='row row-cols-md-3 g-4'>
-                {users.map(user => <div className='col card p-40' key={user.id}>
-                    <h1>{user.fullName}</h1>
-                    <div>{user.id}</div>
-                    <div>{user.email}</div>
-                    <Secondary onClick={() => navigate(`${user.id}`)}>Edit user</Secondary>
-                    <Primary onClick={() => editUser(user)}>Edit name</Primary>
-                    <Danger onClick={() => deleteUser(user.id)}>Delete user</Danger>
-                </div>)}
+            <div className='inline'>
+                <Large type='search' placeholder='Search User' onChange={event => setQuery(event.target.value)} />
+                <Success onClick={addUser}>Add User</Success>
             </div>
-            <Success onClick={addUser}>Add User</Success>
+            <div className='row row-cols-md-3 g-4'>
+                {users
+                    .filter(user => query === '' ? user : (user.fullName.toLowerCase().includes(query.toLowerCase()) ? user : ''))
+                    .map(user => <div className='col card p-40' key={user.id}>
+                        <h1>{user.fullName}</h1>
+                        <div>{user.id}</div>
+                        <div>{user.email}</div>
+                        <Secondary onClick={() => navigate(`${user.id}`)}>Edit user</Secondary>
+                        <Primary onClick={() => editUser(user)}>Edit name</Primary>
+                        <Danger onClick={() => deleteUser(user.id)}>Delete user</Danger>
+                    </div>)
+                }
+            </div>
+
         </div>
     );
 }

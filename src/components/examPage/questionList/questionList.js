@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import AddQuestion from '../addQuestion/addQuestion';
-import { Secondary, Success } from '../button/button.stories';
+import { Success } from '../button/button.stories';
 import Question from '../question/question';
 import style from '../question/question.module.css';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/auth';
 import usePrevious from '../customHooks/usePrevious';
 import ExamService from '../../../services/exams.service';
@@ -13,6 +13,7 @@ export default function QuestionList({ questionsP }) {
 
     const auth = useAuth(),
         navigate = useNavigate(),
+        location = useLocation(),
         [correctAnswers, setCorrectAnswer] = useState(0),
         [questions, setQuestions] = useState(questionsP),
         [questionsLength, setQuestionsLength] = useState(),
@@ -111,12 +112,12 @@ export default function QuestionList({ questionsP }) {
 
     return (
         <>
-            <div className={`row row-cols-md-1 m-3 g-3 ${auth.user ? style.submitted : null}`}>
+            <div className={`row row-cols-md-1 m-3 g-3 ${auth.user || examSubmitted ? style.submitted : null}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
             </div>
             {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
-            {examSubmitted && <Outlet />}
+            {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );
 }

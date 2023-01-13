@@ -1,3 +1,22 @@
+div.inline {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.div.footer {
+  justify-content: center;
+  position:relative;
+  bottom:0;
+}
+
+.container .div.footer {
+  width: 350px;
+  min-height: 300px;
+  /* Center child horizontally*/
+  justify-content: center;
+}
+
 header {
   color: #000;
   padding: 3em;
