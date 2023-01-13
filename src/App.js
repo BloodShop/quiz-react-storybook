@@ -130,9 +130,11 @@ export default function App() {
           <Route path='new' element={<NewExams />} />
         </Route>
 
-        <Route path='exams/:id' element={<ExamPage /* setExam={setExam} */ />} />
+        <Route path='exams/:id' element={<ExamPage />} >
+          <Route path='result' element={<ExamResult />} />
+        </Route>
         <Route path='exams/:id/add-question' element={<RequireAuth><AddQuestion /></RequireAuth>}/>
-        <Route path='exams/:id/result' element={<ExamResult /* setExam={setExam} */ />} />
+        {/* <Route path='exams/:id/result' element={<ExamResult />} /> */}
 
         <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
 

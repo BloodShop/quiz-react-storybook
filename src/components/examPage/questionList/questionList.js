@@ -73,7 +73,7 @@ export default function QuestionList({ questionsP }) {
     useEffect(() => {
         if (prevProp && examSubmitted) {
             console.log(`${correctAnswers} / ${questionsLength}`);
-            navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength } } );
+            navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength } });
         }
     }, [examSubmitted]);
 
