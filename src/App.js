@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Routes } from 'react-router-dom';
 import AddQuestion from './components/examPage/addQuestion/addQuestion';
 import Navbar from './components/navbar/navbar';
-import ExamResult from './components/examResult/examResult';
+import ExamResult from './components/examPage/examResult/examResult';
 import NoMatch from './components/noMatch/noMatch';
 import ExamPage from './components/examPage/examPage';
 import ExamsPage from './components/examsPage/examsPage';

@@ -11,44 +11,6 @@ import ExamService from '../../../services/exams.service';
 
 export default function QuestionList({ questionsP }) {
 
-    /* const [questions, setQuestions] = useState([
-        {
-            id: 1,
-            title: 'Just the first question',
-            description: 'What`s your favorite way to spend a day off?',
-            answers: [
-                { txt: 'Football', selected: false },
-                { txt: 'Learn c#', selected: false },
-                { txt: 'play cs-go', selected: false },
-                { txt: 'sleep', selected: false }
-            ],
-            correctAnswer: 'play cs-go'
-        },
-        {
-            id: 2,
-            title: 'Just the second question',
-            description: 'What type of music are you into?',
-            answers: [
-                { txt: 'Rap', selected: false },
-                { txt: 'Rock Metal', selected: false },
-                { txt: 'Just Metal', selected: false },
-                { txt: 'Proper Metal', selected: false }
-            ],
-            correctAnswer: 'Rap'
-        },
-        {
-            id: 3,
-            title: 'What was the last thing you`ve done?',
-            description: 'you had wasted time on something before your shitty work, what would it be?',
-            answers: [
-                { txt: 'Kill myself', selected: false },
-                { txt: 'Dream of a better friend', selected: false },
-                { txt: 'Send nudes to my crush', selected: false },
-                { txt: 'I would think of how could I encourage my friends go to educate at Sela College', selected: false }
-            ],
-            correctAnswer: 'Send nudes to my crush'
-        },
-    ]); */
     const auth = useAuth(),
         navigate = useNavigate(),
         [correctAnswers, setCorrectAnswer] = useState(0),
@@ -73,7 +35,7 @@ export default function QuestionList({ questionsP }) {
     useEffect(() => {
         if (prevProp && examSubmitted) {
             console.log(`${correctAnswers} / ${questionsLength}`);
-            navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength } });
+            navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength, formSubmitted: examSubmitted } });
         }
     }, [examSubmitted]);
 
@@ -153,8 +115,8 @@ export default function QuestionList({ questionsP }) {
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
             </div>
-            {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : <Success onClick={onSubmit} >Submit Exam ✅</Success>}
-            <Outlet />
+            {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
+            {examSubmitted && <Outlet />}
         </>
     );
 }
