@@ -3,7 +3,7 @@ import { Danger, Secondary } from '../button/button.stories';
 import { RadioInput, Small } from '../input/input.stories';
 import style from './question.module.css';
 
-export default function Question({ question, questionIndex, onChange, onRemove, isSubmitted }) {
+export default function Question({ question, questionIndex, onChange, onRemove, onEdit, isSubmitted }) {
 
     const [currentAnswer, setCurrentAnswer] = useState();
 
@@ -28,7 +28,7 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
                     <>
                         {/*  ${isSubmitted ? style.display : style.non_display} */}
                         <Danger onClick={() => onRemove(question.id)}>Delete ❌</Danger>
-                        <Secondary onClick={() => onRemove(question.id)}>Edit ✍️</Secondary>
+                        <Secondary onClick={onEdit}>Edit ✍️</Secondary>
                     </>
                 }
 

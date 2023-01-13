@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnswerInput from '../answerInput/answerInput';
 
-export default function AnswerInputs({ onInput, onAdd, question }) {
+export default function AnswerInputs({ onInput, question }) {
+
+  const [answers, setAnswers] = useState(question.answers);
+
   return (
     <>
         <label className='col'>Answers:
-            <AnswerInput name='answer0' type='text' onInput={onInput} />
-            <AnswerInput name='answer1' type='text' onInput={onInput} />
-            <AnswerInput name='answer2' type='text' onInput={onInput} />
-            <AnswerInput name='answer3' type='text' onInput={onInput} />
+        {[0, 1, 2, 3].map((n, i) => <AnswerInput key={answers[i].txt+[i]} name={`answer${i}`} type='text'
+          onInput={onInput} value={answers[i] ? answers[i].txt : ''} />)}
         </label>
         <label className='m-2'>Correct Answer:
-            <AnswerInput name='correctAnswer' type='text' onInput={onInput} />
+            <AnswerInput name='correctAnswer' type='text' onInput={onInput} value={question.correctAnswer}/>
         </label>
     </>
   )

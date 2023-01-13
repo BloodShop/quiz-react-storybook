@@ -14,22 +14,6 @@ export default function AddQuestion({ onAdd }) {
             correctAnswer: '-1'
         });
 
-
-    /* const onAdd = () => {
-        // Question validation
-        if (question.title === '' || question.description === '' || question.answers.length !== 4 ||
-            !question.answers.some(a => a.txt === question.correctAnswer) ||
-            question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
-
-        let examToUpdate = {...exam};
-        examToUpdate.questions.push({ id: Math.round(Math.random() * 100000) ,...question });
-        service.putExam(examToUpdate)
-            .then(res => {
-                console.log(examToUpdate);
-                setExam(examToUpdate);
-            });
-    } */
-
     const addQuestionHandler = (e) => {
         const newQuestion = {...structuredClone(question)},
             txt = e.target.value;
@@ -57,7 +41,7 @@ export default function AddQuestion({ onAdd }) {
             </label>
             <label className='m-2 p-1' htmlFor='description'>Description:</label>
                 <textarea className='m-2' name='description' onInput={addQuestionHandler} />
-            <AnswerInputs onInput={addQuestionHandler} onAdd={onAdd} question={question} />
+            <AnswerInputs onInput={addQuestionHandler} question={question} />
             <Primary onClick={() => onAdd(question)}>Add Question</Primary>
         </div>
     );
