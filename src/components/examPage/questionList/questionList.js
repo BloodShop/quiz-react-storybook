@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AddQuestion from '../addQuestion/addQuestion';
 import { Secondary, Success } from '../button/button.stories';
 import Question from '../question/question';
 import style from '../question/question.module.css';
-import { Outlet, useNavigate } from 'react-router-dom';
-import ExamResult from '../../examResult/examResult';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/auth';
+import usePrevious from '../customHooks/usePrevious';
+import ExamService from '../../../services/exams.service';
+/* import cloneDeep from 'lodash/cloneDeep'; */
 
 export default function QuestionList({ questionsP }) {
 
@@ -47,12 +49,33 @@ export default function QuestionList({ questionsP }) {
             correctAnswer: 'Send nudes to my crush'
         },
     ]); */
-    const [correctAnswers, setCorrectAnswer] = useState(0),
-        [questions, setQuestions] = useState(questionsP),
-        [questionsLength, setQuestionsLength] = useState(questions.length),
-        [styleSubmit, setStyleSubmit] = useState(''),
+    const auth = useAuth(),
         navigate = useNavigate(),
-        auth = useAuth();
+        [correctAnswers, setCorrectAnswer] = useState(0),
+        [questions, setQuestions] = useState(questionsP),
+        [questionsLength, setQuestionsLength] = useState(),
+        [examSubmitted, setExamSubmitted] = useState(false);
+    useEffect(() => {
+        setQuestionsLength(questions.length);
+    }, [questions])
+
+    const service = new ExamService(),
+        params = useParams(),
+        [exam, setExam] = useState();
+    useEffect(() => {
+        service.getExamById(params.id)
+                .then(res => setExam(res))
+                .catch(err => console.log(err));;
+    }, [])
+
+    /* custom hook that provides previous props using useRef */
+    const prevProp = usePrevious({ examSubmitted });
+    useEffect(() => {
+        if (prevProp && examSubmitted) {
+            console.log(`${correctAnswers} / ${questionsLength}`);
+            navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength } } );
+        }
+    }, [examSubmitted]);
 
     const changeHandler = (question) => {
         let questionIndex = questions.findIndex(q => q.id === question.id);
@@ -62,10 +85,11 @@ export default function QuestionList({ questionsP }) {
     }
 
     const removeHandler = (id) => {
-        /* debugger; */
-        let filteredQuestions = [...questions.filter(q => q.id !== id)];
+        let filteredQuestions = [...questions.filter(q => q.id !== id)],
+            toUpdateExam = {...exam};
+        toUpdateExam.questions = filteredQuestions;
         setQuestions(filteredQuestions);
-        checkQuestions(filteredQuestions);
+        service.putExam(toUpdateExam);
     }
 
     const addQuestionHandler = (question) => {
@@ -76,16 +100,19 @@ export default function QuestionList({ questionsP }) {
 
         const newQuestion = {id: Math.round(Math.random() * 100000) ,...question},
             newQuestions = [...questions, newQuestion];
-        setQuestions(newQuestions);
-        checkQuestions(newQuestions);
-    }
 
-    const onReset = () => {
-        setStyleSubmit();
+        setQuestions(newQuestions);
+        let examToUpdate = {...exam};
+        examToUpdate.questions.push({ id: Math.round(Math.random() * 100000) ,...newQuestion });
+        service.putExam(examToUpdate)
+            .then(res => {
+                console.log(examToUpdate);
+                setExam(examToUpdate);
+            });
     }
 
     const onSubmit = () => {
-        debugger;
+
         const none = (arr, callback) => !arr.some(callback);
         let confirmed = true;
 
@@ -98,12 +125,11 @@ export default function QuestionList({ questionsP }) {
             };
             return false;
         });
+
         if (confirmed) {
             checkQuestions(questions);
-            setStyleSubmit(style.submitted);
+            setExamSubmitted(true)
         }
-
-        navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength } });
     }
 
     const checkQuestions = (quests) => {
@@ -119,19 +145,15 @@ export default function QuestionList({ questionsP }) {
         });
 
         setCorrectAnswer(newCorrectAnswers);
-        setQuestionsLength(quests.length);
     }
 
     return (
         <>
-            <div className={`row row-cols-md-1 g-4 ${styleSubmit}`}>
+            <div className={`row row-cols-md-1 m-3 g-3 ${auth.user ? style.submitted : null}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
-                        onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!styleSubmit} />)}
+                        onChange={changeHandler} onRemove={removeHandler} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
             </div>
-            <Success onClick={onSubmit} >Submit Exam ✅</Success>
-            <Secondary onClick={onReset} >Reset Answers ⌛</Secondary>
-            {/* <ExamResult correctAnswers={correctAnswers} totalQuestions={questionsLength}/> */}
-            {auth.user && <AddQuestion onAdd={addQuestionHandler}/>}
+            {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : <Success onClick={onSubmit} >Submit Exam ✅</Success>}
             <Outlet />
         </>
     );
