@@ -10,8 +10,8 @@ export default function AddQuestion({ onAdd }) {
     const [question, setQuestion] = useState({
             title: '',
             description: '',
-            answers: [],
-            correctAnswer: '-1'
+            answers: [,,,],
+            correctAnswer: ''
         });
 
     const addQuestionHandler = (e) => {
