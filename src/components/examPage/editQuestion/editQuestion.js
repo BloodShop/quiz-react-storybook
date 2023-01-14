@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ExamService from '../../../services/exams.service';
+import { useAuth } from '../../auth/auth';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { Primary } from '../button/button.stories';
 import { Large } from '../input/input.stories';
@@ -8,26 +9,26 @@ import { Large } from '../input/input.stories';
 export default function EditQuestion() {
 
     const service = new ExamService(),
+        auth = useAuth(),
         params = useParams(),
-        { state } = useLocation(),
         navigate = useNavigate(),
+        { state } = useLocation(),
         [exam, setExam] = useState(),
         [question, setQuestion] = useState();
 
     useEffect(() => {
         service.getExamById(params.id)
             .then(res => setExam(res))
-            /* .then(() => {
-                setQuestion(exam?.questions?.find(q => q.id == params.id)); // equallity by type && value
-            }) */
             .catch(err => console.log(err))
+
     }, []);
 
     useEffect(() => {
-        setQuestion(exam?.questions?.find(q => q.id == params.id)); /* equallity by type && value */
+        setQuestion(structuredClone(exam?.questions?.find(q => q.id == params.id))); /* equallity by type && value */
     }, [exam]);
 
     const editQuestionHandler = (e) => {
+
         const newQuestion = {...structuredClone(question)},
             txt = e.target.value;
 
@@ -46,6 +47,17 @@ export default function EditQuestion() {
         setQuestion(newQuestion);
     }
 
+    const editQuestion = () => {
+        console.log(state);
+
+        let examToEdit = {...exam}
+        let index = examToEdit.questions.indexOf(examToEdit.questions.find(q => q.id == question.id));
+        examToEdit.questions[index] = question;
+        service.putExam(examToEdit)
+            .then((res) => console.log(res));
+        navigate(`/exams/${exam.id}`)
+    }
+
     return (
         <>
             {question &&
@@ -57,7 +69,7 @@ export default function EditQuestion() {
                     <label className='m-2 p-1' htmlFor='description'>Description:</label>
                     <textarea className='m-2' value={question.description} name='description' onInput={editQuestionHandler} />
                     <AnswerInputs onInput={editQuestionHandler} question={question} />
-                    <Primary onClick={() => state.onEdit(question)}>Edit Question</Primary>
+                    <Primary onClick={editQuestion}>Edit Question</Primary>
                 </div>
             }
         </>

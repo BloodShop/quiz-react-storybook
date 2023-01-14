@@ -135,7 +135,7 @@ export default function App() {
           <Route path='result' element={<ExamResult key={Math.random()}/>} />
         </Route>
         <Route path='exams/:id/add-question' element={<RequireAuth><AddQuestion /></RequireAuth>}/>
-        <Route path='exams/:id/edit-question/:qid' element={<RequireAuth><EditQuestion /></RequireAuth>}/>
+        <Route path='exams/:id/edit-question/:qid' element={<EditQuestion />}/>
 
         <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
 

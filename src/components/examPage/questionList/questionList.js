@@ -110,11 +110,22 @@ export default function QuestionList({ questionsP }) {
         setCorrectAnswer(newCorrectAnswers);
     }
 
+    const onEditQuestion = (exam, newQuestion) => {
+        let qToUpdate = exam.questions.find(q => q.id == newQuestion.id);
+        qToUpdate = newQuestion;
+        service.putExam(exam)
+            .then((res) => console.log(res));
+    }
+
+    const editAndNavigate = (questionId) => {
+       navigate(`edit-question/${questionId}`, { state: { onEdit: onEditQuestion } })
+    }
+
     return (
         <>
             <div className={`row row-cols-md-1 m-3 g-3 ${auth.user || examSubmitted ? style.submitted : null}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
-                        onChange={changeHandler} onRemove={removeHandler} onEdit={() => navigate(`edit-question/${question.id}`)} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
+                        onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
             </div>
             {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
