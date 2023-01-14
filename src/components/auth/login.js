@@ -3,26 +3,59 @@ import { Primary } from '../examPage/button/button.stories';
 import { Medium } from '../examPage/input/input.stories';
 import { useAuth } from './auth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default function Login() {
+async function loginUser(credentials) {
+    return fetch('http://localhost:8080/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   }
 
-    const [user, setUser] = useState(''),
+export default function Login({ setToken }) {
+
+    const [username, setUserName] = useState(''),
+        [password, setPassword] = useState(),
         auth = useAuth(),
         navigate = useNavigate(),
         location = useLocation(),
         redirectPath = location.state?.path || '/';
 
     const handleLogin = () => {
-        auth.login(user)
-        navigate(redirectPath, { replace: true });
+        auth.login(username)
+        navigate(-1, { replace: true });
+    }
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const token = await loginUser({
+            username,
+            password
+        });
+        setToken(token);
     }
 
     return (
         <div>
-            <label>Username: { ' ' }
-                <Medium type='text' onChange={e => setUser(e.target.value)} />
-            </label>
-            <Primary onClick={handleLogin} >Login</Primary>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Username
+                    <Medium type='text' onChange={e => setUserName(e.target.value)} />
+                </label>
+                <label>
+                    Password
+                    <Medium type='password' onChange={e => setPassword(e.target.value)}/>
+                </label>
+                <Primary onClick={handleLogin} >Login</Primary>
+            </form>
         </div>
     );
 }
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+  }

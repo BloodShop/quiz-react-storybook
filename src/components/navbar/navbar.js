@@ -8,6 +8,7 @@ export default function Navbar() {
         return {
             fontWeight: isActive ? 'bold' : 'normal',
             textdecoration: isActive ? 'none' : 'underline',
+            fontSize: '27px',
         }
     }
 

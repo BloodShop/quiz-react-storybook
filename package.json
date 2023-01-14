@@ -69,6 +69,8 @@
     "@storybook/testing-library": "^0.0.13",
     "axios": "^1.2.2",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
