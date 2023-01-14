@@ -79,68 +79,20 @@
           "correctAnswer": "Send nudes to my crush"
         },
         {
-          "id": 67330,
-          "title": "asdasda",
-          "description": "asdasdas",
+          "id": 56176,
+          "title": "asdsadas",
+          "description": "sacsacadcqedcqvcqe",
           "answers": [
             {
-              "txt": "asda",
+              "txt": "adccq",
               "selected": false
             },
             {
-              "txt": "asasasasasasas",
+              "txt": "qc",
               "selected": false
             },
             {
-              "txt": "qw2",
-              "selected": false
-            },
-            {
-              "txt": "lol",
-              "selected": false
-            }
-          ],
-          "correctAnswer": "lol"
-        },
-        {
-          "id": 68233,
-          "title": "fdsfg",
-          "description": "sdvsvfvrw",
-          "answers": [
-            {
-              "txt": "dfdvfsv",
-              "selected": false
-            },
-            {
-              "txt": "fdvd ",
-              "selected": false
-            },
-            {
-              "txt": " fbdfvdf",
-              "selected": false
-            },
-            {
-              "txt": "lol",
-              "selected": false
-            }
-          ],
-          "correctAnswer": "lol"
-        },
-        {
-          "id": 15423,
-          "title": "fdsfg",
-          "description": "sdvsvfvrw",
-          "answers": [
-            {
-              "txt": "dfdvfsv",
-              "selected": false
-            },
-            {
-              "txt": "fdvd ",
-              "selected": false
-            },
-            {
-              "txt": " fbdfvdf",
+              "txt": "wqac",
               "selected": false
             },
             {
@@ -313,66 +265,17 @@
       ]
     },
     {
-      "id": 4,
-      "title": "walla lo",
-      "releasedDate": "2018-12-10T13:45:00.000Z",
-      "description": "LoL Dodge Game is a training tool for famous moba games like League of Legends you can improve your mechanics or just warmup by playing one of our Games.",
-      "questions": [
-        {
-          "id": 1,
-          "title": "Just the first question",
-          "description": "What`s your favorite way to spend a day off?",
-          "answers": [
-            {
-              "txt": "Football",
-              "selected": false
-            },
-            {
-              "txt": "Learn c#",
-              "selected": false
-            },
-            {
-              "txt": "play cs-go",
-              "selected": false
-            },
-            {
-              "txt": "sleep",
-              "selected": false
-            }
-          ],
-          "correctAnswer": "play cs-go"
-        },
-        {
-          "id": 2,
-          "title": "Just the second question",
-          "description": "What type of music are you into?",
-          "answers": [
-            {
-              "txt": "Rap",
-              "selected": false
-            },
-            {
-              "txt": "Rock Metal",
-              "selected": false
-            },
-            {
-              "txt": "Just Metal",
-              "selected": false
-            },
-            {
-              "txt": "Proper Metal",
-              "selected": false
-            }
-          ],
-          "correctAnswer": "Rap"
-        }
-      ]
-    },
-    {
       "title": "just a sample",
       "description": "sample many times sample many times sample many times sample many times sample many times sample many times sample many times sample many times sample many times sample many times ",
       "id": 5,
       "releasedDate": 1673596385790,
+      "questions": []
+    },
+    {
+      "title": "sfsdfsdfsdfsfsf",
+      "description": "sdvrgrwbet",
+      "id": 6,
+      "releasedDate": 1673734665722,
       "questions": []
     }
   ],
