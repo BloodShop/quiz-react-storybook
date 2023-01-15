@@ -1,4 +1,4 @@
-<h1><a href='https://easy-quizy-d73c9.web.app/' target='blank'>View My Site</a></h1>
+<h1><a href='https://easy-quizy-d73c9.web.app/' target="_blank">View My Site</a></h1>
 
 # Getting Started with Easy-Quizy
 
