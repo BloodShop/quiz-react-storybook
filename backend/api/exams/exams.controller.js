@@ -3,7 +3,7 @@ import ExamsDAO from "../../dao/examsDAO.js"
 export default class ExamsController {
     static async apiPostExam(req, res, next) {
         try {
-            const examId = req.body.exam_id;
+            const examId = req.body.id;
             const description = req.body.description;
             const title = req.body.title;
             const releasedDate = Date.now();
@@ -11,14 +11,16 @@ export default class ExamsController {
                 ...req.body.questions
             ]
 
-            const UserResponse = await ExamsDAO.addExam(
-                examId,
-                title,
-                description,
-                releasedDate,
-                questions,
-            )
-            res.json({ status: "success" })
+            const newExam = {
+                id: req.body.id,
+                description: req.body.description,
+                title: req.body.title,
+                releasedDate: req.body.releasedDate,
+                questions: req.body.questions
+            }
+
+            const ExamResponse = await ExamsDAO.addExam(newExam)
+            res.json({ status: "success", examResponse: ExamResponse })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

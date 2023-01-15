@@ -1,5 +1,6 @@
-import mongodb from "mongodb";
-const ObjectId = mongodb.ObjectID
+import mongodb from 'mongodb';
+const ObjectId = mongodb.ObjectID;
+
 let exams;
 
 export default class ExamsDAO {
@@ -8,7 +9,8 @@ export default class ExamsDAO {
       return;
     }
     try {
-        exams = await conn.db(process.env.EASYQUIZY_NS).collection("exams")
+        exams = await conn.db(process.env.EASYQUIZY_NS).collection("exams");
+        console.log(exams);
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in examsDAO: ${e}`,
@@ -57,18 +59,9 @@ static async getExams({
     }
 }
 
-static async addExam(examId, title, description, releasedDate, questions) {
-  debugger
+static async addExam(exam) {
   try {
-    const examDoc = {
-        id: examId,
-        title: title,
-        description: description,
-        releasedDate: releasedDate,
-        ...questions
-      }
-
-    return await exams.insertOne(examDoc)
+    return await exams.insertOne(exam)
   } catch (e) {
     console.error(`Unable to post review: ${e}`)
     return { error: e }
