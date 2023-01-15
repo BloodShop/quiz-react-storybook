@@ -34,9 +34,9 @@ function getToken() {
 export default function App() {
   const { token, setToken } = useToken();
 
-  if(!token) {
+  /* if(!token) {
     return <Login setToken={setToken} />
-  }
+  } */
 
   return (
     <AuthProvider>

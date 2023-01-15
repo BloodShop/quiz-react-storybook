@@ -8,8 +8,8 @@
       "questions": [
         {
           "id": 1,
-          "title": "Just the first questionasdfasdsad",
-          "description": "What`s your favorite way to spend a day off?asdasdsadsadsadadregregregrevregregre",
+          "title": "Just the first question",
+          "description": "What`s your favorite way to spend a day off?",
           "answers": [
             {
               "txt": "Football",

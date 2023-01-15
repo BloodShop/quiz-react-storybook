@@ -1,6 +1,27 @@
 import ExamsDAO from "../../dao/examsDAO.js"
 
 export default class ExamsController {
+    static async apiPostExam(req, res, next) {
+        try {
+            const examId = req.body.exam_id
+            const title = req.body.title;
+            const releasedDate = Date.now();
+            const questions = [
+
+            ]
+
+            const UserResponse = await UsersDAO.addUser(
+                examId,
+                title,
+                releasedDate,
+                questions,
+            )
+            res.json({ status: "success" })
+            } catch (e) {
+            res.status(500).json({ error: e.message })
+            }
+        }
+
     static async apiGetExams(req, res, next) {
         const examsPerPage = req.query.examsPerPage ? parseInt(req.query.examsPerPage, 10) : 20;
         const page = req.query.page ? parseInt(req.query.page, 10) : 0;

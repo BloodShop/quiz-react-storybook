@@ -10,9 +10,9 @@ const port = process.env.PORT || 8000;
 MongoClient.connect(
     process.env.EASYQUIZY_DB_URI,
     {
-      /* poolSize: 50, */
       wtimeoutMS: 2500,
-      /* native_parser:true */ }
+      /* poolSize: 50,
+      native_parser:true */ }
     )
     .catch(err => {
       console.error(err.stack)
