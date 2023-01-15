@@ -1,4 +1,4 @@
-import { date } from '@storybook/addon-knobs';
+import { date } from '@storybook/addon-controls';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Large } from '../examPage/input/input.stories';

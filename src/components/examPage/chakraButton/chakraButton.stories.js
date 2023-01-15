@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 import { actions, action } from '@storybook/addon-actions';
-import { text, boolean } from "@storybook/addon-knobs";
+import { text, boolean } from "@storybook/addon-controls";
 
 export default {
     title: 'ChakraButton',

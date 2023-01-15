@@ -2,7 +2,7 @@ import React from "react";
 import Center from "../src/components/center/center";
 import { ThemeProvider, theme, CSSReset, Box } from "@chakra-ui/react";
 import { withConsole } from '@storybook/addon-console';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-controls';
 import { addDecorator, addParameters } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { withA11y } from '@storybook/addon-a11y';
