@@ -1,3 +1,5 @@
+<h1><a href='https://easy-quizy-d73c9.web.app/' target='_blank'>View My Site</a></h1>
+
 # Getting Started with Easy-Quizy
 
 React web application using storybook, chakra-ui, routing, express, cors, authentication, axios. Application to set the teachers and students environment; teachers may publish and edit exam inorder to test the students.
