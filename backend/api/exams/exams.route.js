@@ -6,8 +6,8 @@ const router = express.Router();
 router
     .route('/')
     .get(ExamsCtrl.apiGetExams)
-    /* .post(ExamsCtrl.apiPostExam)
-    .put(ExamsCtrl.apiPutExam)
+    .post(ExamsCtrl.apiPostExam)
+    /* .put(ExamsCtrl.apiPutExam)
     .delete(ExamsCtrl.apiDeleteExam); */
 
 export default router;

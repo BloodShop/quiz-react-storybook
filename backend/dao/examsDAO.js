@@ -56,6 +56,25 @@ static async getExams({
         return { examsList: [], totalNumExams: 0 }
     }
 }
+
+static async addExam(examId, title, description, releasedDate, questions) {
+  debugger
+  try {
+    const examDoc = {
+        id: examId,
+        title: title,
+        description: description,
+        releasedDate: releasedDate,
+        ...questions
+      }
+
+    return await exams.insertOne(examDoc)
+  } catch (e) {
+    console.error(`Unable to post review: ${e}`)
+    return { error: e }
+  }
+}
+
 /*
 static async getRestaurantByID(id) {
     try {

@@ -1,8 +1,21 @@
-/* import UsersDAO from "../dao/usersDAO.js"
+/* import UsersDAO from "../dao/usersDAO.js" */
 
+/* const User = require('../models/user'); */
 export default class UsersController {
   static async apiPostUser(req, res, next) {
-    try {
+    /* console.log('!!!! inside post');
+
+    const data = new User({
+      fullName: req.body.fullName,
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role
+    })
+
+    const val = await data.save();
+    res.json(val); */
+
+    /* try {
       const restaurantId = req.body.restaurant_id
       const user = req.body.text
       const userInfo = {
@@ -20,10 +33,10 @@ export default class UsersController {
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
-    }
+    } */
   }
 
-  static async apiUpdateUser(req, res, next) {
+  /* static async apiUpdateUser(req, res, next) {
     try {
       const userId = req.body.user_id
       const text = req.body.text
@@ -51,10 +64,10 @@ export default class UsersController {
     } catch (e) {
       res.status(500).json({ error: e.message })
     }
-  }
+  } */
 
   static async apiDeleteUser(req, res, next) {
-    try {
+    /* try {
       const userId = req.query.id
       const userId = req.body.user_id
       console.log(userId)
@@ -65,7 +78,7 @@ export default class UsersController {
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
-    }
+    } */
   }
 
-} */
+}
