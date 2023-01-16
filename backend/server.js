@@ -10,6 +10,7 @@ const app = express(),
 
 app.use(cors());
 app.use(express.json()); /* server can accept json in the body of the request */
+app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 

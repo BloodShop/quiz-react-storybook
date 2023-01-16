@@ -32,9 +32,9 @@ export default class ExamsController {
 
         let filters = {};
         if (req.query.id) {
-        filters.id = req.query.id;
+            filters.id = req.query.id;
         } else if (req.query.title) {
-        filters.title = req.query.title;
+            filters.title = req.query.title;
         }
 
         const { examsList, totalNumExams } = await ExamsDAO.getExams({
@@ -68,13 +68,37 @@ export default class ExamsController {
         }
     }
 
-  /* static async apiGetExamCuisines(req, res, next) {
-    try {
-      let cuisines = await ExamsDAO.getCuisines()
-      res.json(cuisines)
-    } catch (e) {
-      console.log(`api, ${e}`)
-      res.status(500).json({ error: e })
+    static async apiPutExam(req, res, next) {
+        try {
+            const newExam = {
+                id: req.body.id,
+                description: req.body.description,
+                title: req.body.title,
+                releasedDate: req.body.releasedDate,
+                questions: req.body.questions
+            }
+
+            const ExamResponse = await ExamsDAO.updateExam(newExam)
+            res.json({ status: "success", examResponse: ExamResponse })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
     }
-  } */
+
+    static async apiDeleteExam(req, res, next) {
+        try {
+            const newExam = {
+                id: req.body.id,
+                description: req.body.description,
+                title: req.body.title,
+                releasedDate: req.body.releasedDate,
+                questions: req.body.questions
+            }
+
+            const ExamResponse = await ExamsDAO.updateExam(newExam)
+            res.json({ status: "success", examResponse: ExamResponse })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

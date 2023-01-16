@@ -10,117 +10,72 @@ export default class ExamsDAO {
     }
     try {
         exams = await conn.db(process.env.EASYQUIZY_NS).collection("exams");
-        console.log(exams);
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in examsDAO: ${e}`,
       )
     }
-}
-
-static async getExams({
-    filters = null,
-    page = 0,
-    examsPerPage = 20,
-} = {}) {
-    let query
-    if (filters) {
-      if ("title" in filters) {
-        query = { $text: { $search: filters["title"] } }
-      } else if ("id" in filters) {
-        query = { "id": { $eq: filters["id"] } }
-      } /* else if ("zipcode" in filters) {
-        query = { "address.zipcode": { $eq: filters["zipcode"] } }
-      } */
-    }
-
-    let cursor;
-
-    try {
-        cursor = await exams
-            .find(query)
-    } catch (e) {
-        console.error(`Unable to issue find command, ${e}`)
-        return { examsList: [], totalNumExams: 0 }
-    }
-
-    const displayCursor = cursor.limit(examsPerPage).skip(examsPerPage * page);
-
-    try {
-        const examsList = await displayCursor.toArray()
-        const totalNumExams = await exams.countDocuments(query)
-
-        return { examsList, totalNumExams }
-    } catch (e) {
-      console.error(
-        `Unable to convert cursor to array or problem counting documents, ${e}`,
-        )
-        return { examsList: [], totalNumExams: 0 }
-    }
-}
-
-static async addExam(exam) {
-  try {
-    return await exams.insertOne(exam)
-  } catch (e) {
-    console.error(`Unable to post review: ${e}`)
-    return { error: e }
   }
-}
 
-/*
-static async getRestaurantByID(id) {
+  static async updateExam(exam) {
     try {
-      const pipeline = [
-        {
-            $match: {
-                _id: new ObjectId(id),
-            },
-        },
-              {
-                  $lookup: {
-                      from: "reviews",
-                      let: {
-                          id: "$_id",
-                      },
-                      pipeline: [
-                          {
-                              $match: {
-                                  $expr: {
-                                      $eq: ["$restaurant_id", "$$id"],
-                                  },
-                              },
-                          },
-                          {
-                              $sort: {
-                                  date: -1,
-                              },
-                          },
-                      ],
-                      as: "reviews",
-                  },
-              },
-              {
-                  $addFields: {
-                      reviews: "$reviews",
-                  },
-              },
-          ]
-      return await restaurants.aggregate(pipeline).next()
+      const updateResponse = await exams.updateOne(
+        { exam_id: exam.id },
+        { $set: { title: exam.title, description: exam.description, releasedDate: exam.releasedDate, quesions: exam.quesions  } },
+      )
+
+      return updateResponse;
     } catch (e) {
-      console.error(`Something went wrong in getRestaurantByID: ${e}`)
-      throw e
+      console.error(`Unable to update review: ${e}`)
+      return { error: e }
     }
   }
 
-  static async getCuisines() {
-    let cuisines = []
+  static async getExams({
+      filters = null,
+      page = 0,
+      examsPerPage = 20,
+  } = {}) {
+      let query
+      if (filters) {
+        if ("title" in filters) {
+          query = { $text: { $search: filters["title"] } }
+        } else if ("id" in filters) {
+          query = { "id": { $eq: filters["id"] } }
+        }
+      }
+
+      let cursor;
+
+      try {
+          cursor = await exams
+              .find(query)
+      } catch (e) {
+          console.error(`Unable to issue find command, ${e}`)
+          return { examsList: [], totalNumExams: 0 }
+      }
+
+      const displayCursor = cursor.limit(examsPerPage).skip(examsPerPage * page);
+
+      try {
+          const examsList = await displayCursor.toArray()
+          const totalNumExams = await exams.countDocuments(query)
+
+          return { examsList, totalNumExams }
+      } catch (e) {
+        console.error(
+          `Unable to convert cursor to array or problem counting documents, ${e}`,
+          )
+          return { examsList: [], totalNumExams: 0 }
+      }
+  }
+
+  static async addExam(exam) {
     try {
-      cuisines = await restaurants.distinct("cuisine")
-      return cuisines
+      return await exams.insertOne(exam)
     } catch (e) {
-      console.error(`Unable to get cuisines, ${e}`)
-      return cuisines
+      console.error(`Unable to post review: ${e}`)
+      return { error: e }
     }
-  } */
+  }
 }
