@@ -1,79 +1,29 @@
 {
-  "name": "hw-students-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@babel/helper-validator-identifier": "^7.19.1",
-    "@chakra-ui/react": "^2.4.8",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "axios": "^1.2.2",
-    "bootstrap": "^5.2.3",
-    "create-react-app": "^5.0.1",
-    "dotenv": "^16.0.3",
-    "framer-motion": "^8.4.3",
-    "json-server": "^0.17.1",
-    "lodash": "^4.17.21",
-    "moment": "^2.29.4",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.6.2",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "mern-tutorial",
+  "version": "1.0.0",
+  "description": "Ez-quizy",
+  "main": "server.js",
   "scripts": {
-    "start": "json-server --watch ./server/db.json --port 3001 | react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "set STORYBOOK_THEME=dark && start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
-    "server:start": "json-server --watch ./server/db.json --port 3001"
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "Alon Kolyakov",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.9"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^6.5.15",
-    "@storybook/addon-actions": "^6.5.15",
-    "@storybook/addon-console": "^1.2.3",
-    "@storybook/addon-controls": "^6.4.0",
-    "@storybook/addon-essentials": "^6.5.15",
-    "@storybook/addon-interactions": "^6.5.15",
-    "@storybook/addon-links": "^6.5.15",
-    "@storybook/builder-webpack5": "^6.5.15",
-    "@storybook/manager-webpack5": "^6.5.15",
-    "@storybook/node-logger": "^6.5.15",
-    "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "^6.5.15",
-    "@storybook/testing-library": "^0.0.13",
-    "babel-plugin-named-exports-order": "^0.0.2",
-    "webpack": "^5.75.0"
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
   }
 }

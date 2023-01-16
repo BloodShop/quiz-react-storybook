@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Routes } from 'react-router-dom';
 import AddQuestion from './components/examPage/addQuestion/addQuestion';
@@ -20,16 +18,6 @@ import RequireAuth from './components/auth/requireAuth';
 import EditQuestion from './components/examPage/editQuestion/editQuestion';
 import useToken from './components/auth/useToken';
 const LazyAbout = React.lazy(() => import('./components/aboutPage/about'));
-
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
-
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token;
-}
 
 export default function App() {
   const { token, setToken } = useToken();
