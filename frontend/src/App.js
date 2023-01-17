@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Route, Routes, Router } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AddQuestion from './components/examPage/addQuestion/addQuestion';
-import Navbar from './components/navbar/navbar';
 import ExamResult from './components/examPage/examResult/examResult';
 import NoMatch from './components/noMatch/noMatch';
 import Exam from './pages/Exam';
 import ExamsArchive from './pages/ExamsArchive';
 import Home from './pages/Home';
-import Users from './components/users/users';
-import EditUser from './components/users/editUser/editUser';
-import Profile from './components/profile/profile';
+import EditUser from './components/editUser/editUser';
 import { AuthProvider } from './components/auth/auth';
 import RequireAuth from './components/auth/requireAuth';
 import EditQuestion from './components/examPage/editQuestion/editQuestion';
@@ -20,7 +17,8 @@ import Login from './pages/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AddExam from './pages/AddExam';
-const LazyAbout = React.lazy(() => import('./components/aboutPage/about'));
+import Users from './pages/Users';
+const LazyAbout = React.lazy(() => import('./pages/About'));
 
 export default function App() {
   /* const { token, setToken } = useToken(); */
@@ -61,7 +59,6 @@ export default function App() {
           <Route path='users' element={<Users />} />
           <Route path='users/:id' element={<EditUser />} />
 
-          <Route path='profile' element={<Profile />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
 

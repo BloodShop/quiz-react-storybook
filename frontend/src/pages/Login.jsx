@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
-import { Primary } from '../components/examPage/button/button.stories'
 
 function Login() {
   const [formData, setFormData] = useState({

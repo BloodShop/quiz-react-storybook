@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Primary } from '../examPage/button/button.stories';
-import { Medium } from '../examPage/input/input.stories';
+import { PrimaryBtn } from '../button/button.stories';
+import { Medium } from '../input/input.stories';
 import { useAuth } from './auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -50,7 +50,7 @@ export default function Login({ setToken }) {
                     Password
                     <Medium type='password' onChange={e => setPassword(e.target.value)}/>
                 </label>
-                <Primary onClick={handleLogin} >Login</Primary>
+                <PrimaryBtn onClick={handleLogin} >Login</PrimaryBtn>
             </form>
         </div>
     );

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   getExams,
+  getExamById,
   setExam,
   updateExam,
   deleteExam,
@@ -14,6 +15,7 @@ router.route('/')
   .post(protect, setExam);
 router.route('/:id')
   .delete(protect, deleteExam)
-  .put(protect, updateExam);
+  .put(protect, updateExam)
+  .get(protect, getExamById);
 
 module.exports = router

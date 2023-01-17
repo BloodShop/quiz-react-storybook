@@ -3,8 +3,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ExamService from '../../../services/exams.service';
 import { useAuth } from '../../auth/auth';
 import AnswerInputs from '../answerInputs/answerInputs';
-import { Primary } from '../button/button.stories';
-import { Large } from '../input/input.stories';
+import { PrimaryBtn } from '../../button/button.stories';
+import { Large } from '../../input/input.stories';
 
 export default function EditQuestion() {
 
@@ -69,7 +69,7 @@ export default function EditQuestion() {
                     <label className='m-2 p-1' htmlFor='description'>Description:</label>
                     <textarea className='m-2' value={question.description} name='description' onInput={editQuestionHandler} />
                     <AnswerInputs onInput={editQuestionHandler} question={question} />
-                    <Primary onClick={editQuestion}>Edit Question</Primary>
+                    <PrimaryBtn onClick={editQuestion}>Edit Question</PrimaryBtn>
                 </div>
             }
         </>

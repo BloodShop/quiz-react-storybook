@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Danger, Secondary } from '../button/button.stories';
-import { RadioInput, Small } from '../input/input.stories';
+import { DangerBtn, SecondaryBtn } from '../../button/button.stories';
+import { RadioInput } from '../../input/input.stories';
 import style from './question.module.css';
 
-export default function Question({ question, questionIndex, onChange, onRemove, onEdit, isSubmitted, onNavigate }) {
+export default function Question({ question, questionIndex, onChange, onRemove, onEdit, isSubmitted }) {
 
     const [currentAnswer, setCurrentAnswer] = useState();
 
@@ -27,8 +27,8 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
                 {isSubmitted &&
                     <>
                         {/*  ${isSubmitted ? style.display : style.non_display} */}
-                        <Danger onClick={() => onRemove(question.id)}>Delete ❌</Danger>
-                        <Secondary onClick={() => onEdit(question.id)}>Edit ✍️</Secondary>
+                        <DangerBtn onClick={() => onRemove(question.id)}>Delete ❌</DangerBtn>
+                        <SecondaryBtn onClick={() => onEdit(question.id)}>Edit ✍️</SecondaryBtn>
                     </>
                 }
 

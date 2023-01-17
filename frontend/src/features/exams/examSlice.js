@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import examService from './examService';
 
 const initialState = {
+  exam: null,
   exams: [],
   isError: false,
   isSuccess: false,
@@ -14,8 +15,8 @@ export const createExam = createAsyncThunk(
   'exams/create',
   async (examData, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await examService.createExam(examData, token)
+      const token = thunkAPI.getState().auth.user.token;
+      return await examService.createExam(examData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -28,13 +29,13 @@ export const createExam = createAsyncThunk(
   }
 )
 
-// Get user exams
+// Get user's exams
 export const getExams = createAsyncThunk(
   'exams/getAll',
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await examService.getExams(token)
+      const token = thunkAPI.getState().auth.user.token;
+      return await examService.getExams(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -47,13 +48,51 @@ export const getExams = createAsyncThunk(
   }
 )
 
-// Delete user exam
+// Get user's exam by id
+export const getExamById = createAsyncThunk(
+  'exams/getOne',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await examService.getExamById(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Delete user's exam
 export const deleteExam = createAsyncThunk(
   'exams/delete',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
       return await examService.deleteExam(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Update user's exam
+export const updateExam = createAsyncThunk(
+  'exams/update',
+  async (newExamData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await examService.updateExam(newExamData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -83,6 +122,21 @@ export const examSlice = createSlice({
         state.exams.push(action.payload)
       })
       .addCase(createExam.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      }) /*  */
+      .addCase(updateExam.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateExam.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.exam = state.exams.find(
+          (exam) => exam._id === action.payload.id
+        )
+      })
+      .addCase(updateExam.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
@@ -118,5 +172,5 @@ export const examSlice = createSlice({
   },
 })
 
-export const { reset } = examSlice.actions
-export default examSlice.reducer
+export const { reset } = examSlice.actions;
+export default examSlice.reducer;

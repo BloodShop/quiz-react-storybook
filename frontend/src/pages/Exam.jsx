@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import QuestionList from '../components/examPage/questionList/questionList'
 import { useParams } from 'react-router-dom';
-import ExamService from '../services/exams.service';
+import { getExamById } from '../features/exams/examSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Exam() {
 
-    const service = new ExamService(),
-        params = useParams(),
-        [exam, setExam] = useState();
+    const params = useParams(),
+        dispatch = useDispatch(),
+        [exam, setExam] = useState(null);
 
     useEffect(() => {
-        service.getExamById(params.id)
-            .then(res => setExam(res))
-            .catch(err => console.log(err))
-        }, []);
+        dispatch(getExamById(params.id))
+            .then(data => setExam(data.payload));
+    }, []);
 
-    /* const exam = exams.find(exam => exam.id === params.id); */
-    /* const [questions, setQuestions] = useState(exam.questions); */
     return (
         <>
             {exam && <div className='App'>
                 <header>
                     <h1>{exam.title}</h1>
                 </header>
-                <QuestionList questionsP={exam.questions} />
+                <QuestionList examP={exam} />
             </div>}
         </>
     );

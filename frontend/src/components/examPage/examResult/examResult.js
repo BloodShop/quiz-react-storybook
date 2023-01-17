@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Primary, Secondary } from '../button/button.stories';
+import { PrimaryBtn, SecondaryBtn } from '../../button/button.stories';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function ExamResult() {
@@ -24,9 +24,9 @@ export default function ExamResult() {
             <h2>Exam Results:</h2>
             <div>{correctAnswers} / {totalQuestions}</div>
             <div>Grade: {correctAnswers / totalQuestions * 100}</div>
-            <Secondary onClick={() => navigate('/exams')}>Go back</Secondary>
-            {/* <Danger onClick={() => navigate()}>Try again</Danger> */}
-            <Primary>Go Learn something</Primary>
+            <SecondaryBtn onClick={() => navigate('/exams')}>Go back</SecondaryBtn>
+            {/* <DangerBtn onClick={() => navigate()}>Try again</DangerBtn> */}
+            <PrimaryBtn>Go Learn something</PrimaryBtn>
         </>
     );
 }

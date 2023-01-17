@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import ExamService from '../../../services/exams.service';
 import AnswerInputs from '../answerInputs/answerInputs';
-import { Primary } from '../button/button.stories';
-import { Large } from '../input/input.stories';
+import { PrimaryBtn } from '../../button/button.stories';
+import { Large } from '../../input/input.stories';
 
 export default function AddQuestion({ onAdd }) {
 
@@ -42,7 +42,7 @@ export default function AddQuestion({ onAdd }) {
             <label className='m-2 p-1' htmlFor='description'>Description:</label>
                 <textarea className='m-2' name='description' onInput={addQuestionHandler} />
             <AnswerInputs onInput={addQuestionHandler} question={question} />
-            <Primary onClick={() => onAdd(question)}>Add Question</Primary>
+            <PrimaryBtn onClick={() => onAdd(question)}>Add Question</PrimaryBtn>
         </div>
     );
 }

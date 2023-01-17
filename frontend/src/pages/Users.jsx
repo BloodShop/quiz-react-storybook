@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Danger, Primary, Secondary, Success } from '../examPage/button/button.stories';
+import { DangerBtn, PrimaryBtn, SecondaryBtn, Success } from '../components/button/button.stories';
 import { useNavigate } from 'react-router-dom';
-import UsersService from '../../services/users.service';
-import { Large } from '../examPage/input/input.stories';
+import UsersService from '../services/users.service';
+import { Large } from '../components/input/input.stories';
 
 export default function Users() {
 
@@ -56,15 +56,15 @@ export default function Users() {
                 <Success onClick={addUser}>Add User</Success>
             </div>
             <div className='row row-cols-md-3 g-4'>
-                {users
+                {users && users
                     .filter(user => query === '' ? user : (user.fullName.toLowerCase().includes(query.toLowerCase()) ? user : ''))
                     .map(user => <div className='col card p-40' key={user.id}>
                         <h1>{user.fullName}</h1>
                         <div>{user.id}</div>
                         <div>{user.email}</div>
-                        <Secondary onClick={() => navigate(`${user.id}`)}>Edit user</Secondary>
-                        <Primary onClick={() => editUser(user)}>Edit name</Primary>
-                        <Danger onClick={() => deleteUser(user.id)}>Delete user</Danger>
+                        <SecondaryBtn onClick={() => navigate(`${user.id}`)}>Edit user</SecondaryBtn>
+                        <PrimaryBtn onClick={() => editUser(user)}>Edit name</PrimaryBtn>
+                        <DangerBtn onClick={() => deleteUser(user.id)}>Delete user</DangerBtn>
                     </div>)
                 }
             </div>

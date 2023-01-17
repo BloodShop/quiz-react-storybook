@@ -11,6 +11,14 @@ const getExams = asyncHandler(async (req, res) => {
   res.status(200).json(exams);
 })
 
+// @desc    Get exam by id
+// @route   GET /api/exams/:id
+// @access  Public
+const getExamById = asyncHandler(async (req, res) => {
+  const exam = await Exam.findOne({ user: req.user.id, id: req.body.id });
+  res.status(200).json(exam);
+})
+
 // @desc    Set exam
 // @route   POST /api/exams
 // @access  Private
@@ -93,6 +101,7 @@ const deleteExam = asyncHandler(async (req, res) => {
 
 module.exports = {
   getExams,
+  getExamById,
   setExam,
   updateExam,
   deleteExam,

@@ -13,9 +13,9 @@ export default class UsersService {
         }
     }
 
-    async getUsers() {
+    getUsers() {
         debugger
-        let users = await axios.get(`${API_URL}all`);
+        let users = axios.get(`${API_URL}all`);
         return users;
     }
 

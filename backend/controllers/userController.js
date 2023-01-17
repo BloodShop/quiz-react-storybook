@@ -8,8 +8,7 @@ const User = require('../models/userModel');
 // @access  Private [role=manager]
 const getUsers = asyncHandler(async (req, res, next) => {
   try {
-    debugger
-    if (req.client.role === 'manager') {
+    if (req.user.role === 'manager') {
       const users = await User.find();
       res.status(200).json({ success: true, data: users });
     } else {

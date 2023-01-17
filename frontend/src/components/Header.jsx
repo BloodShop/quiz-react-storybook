@@ -1,8 +1,7 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout, reset } from '../features/auth/authSlice'
-import { Primary, Success } from './examPage/button/button.stories'
+import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../features/auth/authSlice';
 
 export default function Header() {
   const navigate = useNavigate()
@@ -14,7 +13,6 @@ export default function Header() {
     dispatch(reset())
     navigate('/')
   }
-  debugger
 
   return (
     <header className='header'>

@@ -23,10 +23,10 @@ Success.args = {
 
 }
 
-export const Danger = Template.bind({});
-Danger.args = {
+export const DangerBtn = Template.bind({});
+DangerBtn.args = {
     colorScheme: 'red',
-    children: 'Danger',
+    children: 'DangerBtn',
     onMouseOver: action('MouseOverEvent')
 }
 

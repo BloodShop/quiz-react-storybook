@@ -1,5 +1,5 @@
 import React from 'react';
-import { Small } from '../input/input.stories';
+import { Small } from '../../input/input.stories';
 
 export default function AnswerInput({ name, type, onInput, value }) {
   return (
