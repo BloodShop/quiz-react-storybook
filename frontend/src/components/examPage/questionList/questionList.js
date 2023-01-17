@@ -7,9 +7,14 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../auth/auth';
 import usePrevious from '../customHooks/usePrevious';
 import ExamService from '../../../services/exams.service';
+import { useDispatch, useSelector } from 'react-redux';
 /* import cloneDeep from 'lodash/cloneDeep'; */
 
 export default function QuestionList({ questionsP }) {
+
+    const dispatch = useDispatch(),
+        { user } = useSelector((state) => state.auth),
+        { isLoading, isError, message } = useSelector((state) => state.exams);
 
     const auth = useAuth(),
         navigate = useNavigate(),
@@ -125,9 +130,9 @@ export default function QuestionList({ questionsP }) {
         <>
             <div className={`row row-cols-md-1 m-3 g-3 ${auth.user || examSubmitted ? style.submitted : null}`}>
                 {questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
-                        onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(auth.user ? style.submitted : null)} />)}
+                        onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />)}
             </div>
-            {auth.user ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
+            {user.role === 'manager' || user.role === 'teacher' ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );

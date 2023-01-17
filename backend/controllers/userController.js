@@ -3,13 +3,30 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 
+// @desc    Get All Users
+// @route   GET /api/users
+// @access  Private [role=manager]
+const getUsers = asyncHandler(async (req, res, next) => {
+  try {
+    debugger
+    if (req.client.role === 'manager') {
+      const users = await User.find();
+      res.status(200).json({ success: true, data: users });
+    } else {
+      throw new Error('Unauthorized');
+    }
+  } catch (err) {
+    res.status(403).json({ success: false, error: err.message });
+  }
+})
+
 // @desc    Register new user
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, role } = req.body;
 
-  if (!fullName || !email || !password) {
+  if (!fullName || !email || !password || !role) {
     res.status(400);
     throw new Error('Please add all fields');
   }
@@ -30,8 +47,8 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     fullName,
     email,
+    role,
     password: hashedPassword,
-    role
   });
 
   if (user) {
@@ -62,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       fullName: user.fullName,
       email: user.email,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
@@ -87,5 +105,6 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  getUsers,
   getMe,
 }

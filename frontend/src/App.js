@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Router } from 'react-router-dom';
 import AddQuestion from './components/examPage/addQuestion/addQuestion';
 import Navbar from './components/navbar/navbar';
 import ExamResult from './components/examPage/examResult/examResult';
 import NoMatch from './components/noMatch/noMatch';
-import ExamPage from './components/examPage/examPage';
-import ExamsPage from './components/examsPage/examsPage';
-import HomePage from './components/homePage/homePage';
-import AddExam from './components/addExam/addExam';
+import Exam from './pages/Exam';
+import ExamsArchive from './pages/ExamsArchive';
+import Home from './pages/Home';
 import Users from './components/users/users';
 import EditUser from './components/users/editUser/editUser';
 import Profile from './components/profile/profile';
 import { AuthProvider } from './components/auth/auth';
-import Login from './components/auth/login';
 import RequireAuth from './components/auth/requireAuth';
 import EditQuestion from './components/examPage/editQuestion/editQuestion';
-import useToken from './components/auth/useToken';
+import Header from './components/Header';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import AddExam from './pages/AddExam';
 const LazyAbout = React.lazy(() => import('./components/aboutPage/about'));
 
 export default function App() {
-  const { token, setToken } = useToken();
+  /* const { token, setToken } = useToken(); */
 
   /* if(!token) {
     return <Login setToken={setToken} />
@@ -28,41 +31,44 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
+      <div className='container'>
+        <Header />
+        {/* <Navbar /> */}
+        <Routes>
+          <Route path='/' element={<Home />} />
 
-        <Route path='about'
-          element={
-            <React.Suspense fallback='Loading...'>
-              <LazyAbout />
-            </React.Suspense>
-          } />
+          <Route path='about'
+            element={
+              <React.Suspense fallback='Loading...'>
+                <LazyAbout />
+              </React.Suspense>
+            } />
 
-        <Route path='exams' element={<ExamsPage />}>
-          {/* <Route index element={< />} />
-          <Route path='featured' element={<FeaturedExams />} />
-          <Route path='new' element={<NewExams />} /> */}
-        </Route>
+          <Route path='exams' element={<ExamsArchive />}>
+            {/* <Route index element={< />} />
+            <Route path='featured' element={<FeaturedExams />} />
+            <Route path='new' element={<NewExams />} /> */}
+          </Route>
 
-        <Route path='exams/:id' element={<ExamPage />} >
-          {/* <Route path='exams/:id/result' element={<ExamResult key={Math.random()}/>} /> */}
-        </Route>
+          <Route path='exams/:id' element={<Exam />} />
 
-        <Route path='exams/:id/result' element={<ExamResult key={Math.random()}/>} />
-        <Route path='exams/:id/add-question' element={<RequireAuth><AddQuestion /></RequireAuth>}/>
-        <Route path='exams/:id/edit-question/:qid' element={<EditQuestion />}/>
+          <Route path='exams/:id/result' element={<ExamResult key={Math.random()}/>} />
+          <Route path='exams/:id/add-question' element={<AddQuestion />}/>
+          <Route path='exams/:id/edit-question/:qid' element={<EditQuestion />}/>
 
-        <Route path='add-exam' element={<RequireAuth><AddExam /></RequireAuth>} />
+          <Route path='add-exam' element={<AddExam />} />
 
-        <Route path='users' element={<RequireAuth><Users /></RequireAuth>} />
-        <Route path='users/:id' element={<RequireAuth><EditUser /></RequireAuth>} />
+          <Route path='users' element={<Users />} />
+          <Route path='users/:id' element={<EditUser />} />
 
-        <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
-        <Route path='login' element={<Login />} />
+          <Route path='profile' element={<Profile />} />
+          <Route path='login' element={<Login />} />
+          <Route path='register' element={<Register />} />
 
-        <Route path='*' element={<NoMatch />} />
-      </Routes>
+          <Route path='*' element={<NoMatch />} />
+        </Routes>
+      </div>
+      <ToastContainer />
     </AuthProvider>
   );
 }

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import QuestionList from './questionList/questionList'
-import { style } from './examPage.css';
+import QuestionList from '../components/examPage/questionList/questionList'
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import ExamService from '../../services/exams.service';
+import ExamService from '../services/exams.service';
 
-export default function ExamPage() {
+export default function Exam() {
 
     const service = new ExamService(),
         params = useParams(),

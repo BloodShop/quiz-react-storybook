@@ -5,6 +5,6 @@ import examReducer from '../features/exams/examSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    goals: examReducer,
+    exams: examReducer,
   },
 })

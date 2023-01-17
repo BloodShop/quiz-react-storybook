@@ -1,12 +1,12 @@
 import { date } from '@storybook/addon-controls';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { Large } from '../examPage/input/input.stories';
+import { Large } from '../components/examPage/input/input.stories';
 import Moment from 'moment';
-import { Danger, Primary, Secondary, Success } from '../examPage/button/button.stories';
-import ExamService from '../../services/exams.service';
+import { Danger, Primary, Secondary, Success } from '../components/examPage/button/button.stories';
+import ExamService from '../services/exams.service';
 
-export default function ExamsPage() {
+export default function ExamsArchive() {
 
     const navigate = useNavigate(),
         [exams, setExams] = useState([]),
@@ -50,7 +50,7 @@ export default function ExamsPage() {
                     .filter(exam => query === '' ? exam : (exam.title.toLowerCase().includes(query.toLowerCase()) ? exam : ''))
                     .map((exam, index) => (
                         <div key={index} className='col card p-40'>
-                            <h2 className='card-header'>{index + 1}. {exam.title} - {exam.id}</h2>
+                            <h2 className='card-header'>{index + 1}. {exam.title}</h2>
                             <p>{exam.description}</p>
                             <h3>{Moment(exam.releasedDate).format('DD-MM-YYYY')}</h3>
                             <div className='footer'>

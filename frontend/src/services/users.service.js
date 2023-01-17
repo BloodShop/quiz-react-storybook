@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_SERVER_URL,
-    examsRoute = process.env.REACT_APP_USERS_ROUTE,
-    defaultHeaders = { 'Content-Type': 'application/json' },
-    baseUrl = apiUrl + examsRoute;
+const API_URL = '/api/v1/users/';
 
 /* axios api class */
 export default class UsersService {
@@ -16,23 +13,25 @@ export default class UsersService {
         }
     }
 
-    getUsers() {
-        return axios.get(`${baseUrl}`);
+    async getUsers() {
+        debugger
+        let users = await axios.get(`${API_URL}all`);
+        return users;
     }
 
     getUserById(userId) {
-        return axios.get(`${baseUrl}${userId}`)
+        return axios.get(`${API_URL}${userId}`)
     }
 
     postUser(user) {
-        return axios.post(`${baseUrl}`, user);
+        return axios.post(`${API_URL}`, user);
     }
 
     putUser(user) {
-        return axios.put(`${baseUrl}${user.id}`, user);
+        return axios.put(`${API_URL}${user.id}`, user);
     }
 
     deleteUser(userId) {
-        return axios.delete(`${baseUrl}${userId}`);
+        return axios.delete(`${API_URL}${userId}`);
     }
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api/v1/users/'
+const API_URL = '/api/v1/users/';
 
 // Register user
 const register = async (userData) => {
@@ -10,7 +10,7 @@ const register = async (userData) => {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
 
-  return response.data
+  return response.data;
 }
 
 // Login user

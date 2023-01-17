@@ -11,7 +11,6 @@ export default function NoMatch() {
           <Link to='/'>Home</Link>
           <Link to='/about'>About</Link>
           <Link to='/exams'>Exams</Link>
-          <Link to='/profile'>Profile</Link>
         </div>
     </div>
   )
