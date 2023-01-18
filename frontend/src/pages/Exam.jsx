@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import QuestionList from '../components/examPage/questionList/questionList'
-import { useParams } from 'react-router-dom';
-import { getExamById } from '../features/exams/examSlice';
-import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getExamById, reset } from '../features/exams/examSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../components/Spinner';
 
 export default function Exam() {
 
     const params = useParams(),
         dispatch = useDispatch(),
-        [exam, setExam] = useState(null);
+        navigate = useNavigate(),
+        { user } = useSelector((state) => state.auth),
+        { exam, isLoading, isError, message } = useSelector((state) => state.exams);
 
     useEffect(() => {
-        dispatch(getExamById(params.id))
-            .then(data => setExam(data.payload));
-    }, []);
+        if (isError) {
+            console.log(message);
+        }
+
+        if (!user) {
+            navigate('/login');
+        }
+        
+        dispatch(getExamById(params.id));
+
+        return () => {
+            dispatch(reset());
+        }
+    }, [ isError, message, navigate, dispatch]);
+
+    if(isLoading) {
+        return <Spinner />
+    }
 
     return (
         <>

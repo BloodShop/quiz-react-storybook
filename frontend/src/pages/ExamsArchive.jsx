@@ -35,12 +35,6 @@ export default function ExamsArchive() {
         dispatch(deleteExam(id));
     }
 
-    /* const updateExam = (exam) => {
-        let newExam = {...exam, title: 'walla lo' };
-        service.putExam(newExam)
-            .then(data => getExamsFromService());
-    } */
-
     if(isLoading) {
         return <Spinner />
     }

@@ -109,7 +109,14 @@ export const examSlice = createSlice({
   name: 'exam',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => {
+      state.isLoading = false
+      state.isSuccess = false
+      state.isError = false
+      state.message = ''
+      // state.exams = []
+      // state.exam = state.exam ? state.exam : null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -165,6 +172,19 @@ export const examSlice = createSlice({
         )
       })
       .addCase(deleteExam.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getExamById.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getExamById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.exam = action.payload
+      })
+      .addCase(getExamById.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

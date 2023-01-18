@@ -25,6 +25,7 @@ const getExams = async (token) => {
 
 const getExamById = async (examId, token) => {
   const response = await axios.get(API_URL + examId, config(token));
+  
   return response.data;
 }
 

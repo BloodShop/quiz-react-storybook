@@ -6,8 +6,6 @@ export default function AnswerInputs({ onInput, question }) {
   const [answers, setAnswers] = useState(question.answers);
 
   useEffect(() => {
-    console.log('!!!', 'qa');
-
     setAnswers(question.answers);
   }, [question])
 

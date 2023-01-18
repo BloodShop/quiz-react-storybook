@@ -13,7 +13,6 @@ export default function ExamResult() {
         if (!state?.formSubmitted) {
             navigate(-1);
         } else {
-            console.log('!!!');
             setCorrectAnswers(state?.correctAnswers);
             setTotalQuestions(state?.totalQuestions);
         }
