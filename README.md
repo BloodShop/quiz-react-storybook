@@ -6,19 +6,46 @@ React web application using storybook, chakra-ui, routing, express, cors, authen
 
 ## Initialize Project - downloading dependecies
 
-### `npm i`
+```
+# Backend deps 
+npm install 
 
-## Available Scripts
+# Frontend deps 
+cd frontend 
+npm install
+```
 
-In the project directory, you can run:
+## Run Application
+
+```
+cd ..
+npm run dev
+```
+
+# Available Scripts
+
+## In the backend directory, you can run:
 
 ### `npm start`
+Runs the backend server.js with node on localhost:5002
 
-Runs the app in the development mode.\
+### `npm run server`
+Runs the backend server.js with nodemon on localhost:5002
+
+### `npm run client`
+Runs the react-app on localhost:3000
+
 **React App** [http://localhost:3000](http://localhost:3000) to view it in your browser.\
-**json-server** [http://localhost:3001](http://localhost:3001) db.server for viewing data.\
-**express** [http://localhost:8080/login](http://localhost:8080) express server - token.
+**express** [http://localhost:5002](http://localhost:5002) server: users and exams requests to atlas mongodb. (.env file for demonstration)
+
+### `npm run dev`
+Runs both backend and frontend.
+
+## In the frontend directory, you can run:
 
 ### `npm run storybook`
-
 Runs the storybook tool for UI development.
+
+### `npm run build-storybook`
+Build a storybook static file.
+
