@@ -31,6 +31,7 @@ const protect = asyncHandler(async (req, res, next) => {
 })
 
 const protectRole = asyncHandler(async (req, res, next) => {
+  debugger
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       // Get token from header

@@ -75,7 +75,7 @@ const updateExam = asyncHandler(async (req, res) => {
 // @route   DELETE /api/exams/:id
 // @access  Private
 const deleteExam = asyncHandler(async (req, res) => {
-  const exam = await Exam.findById(req.params.id)
+  const exam = await Exam.findById(req.params.id);
 
   if (!exam) {
     res.status(400);

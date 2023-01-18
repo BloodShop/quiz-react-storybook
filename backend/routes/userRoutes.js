@@ -3,14 +3,19 @@ const router = express.Router()
 const {
   registerUser,
   loginUser,
+  deleteUser,
   getUsers,
   getMe,
 } = require('../controllers/userController')
 const { protect, protectRole } = require('../middleware/authMiddleware')
 
+// auth
 router.post('/', registerUser)
 router.post('/login', loginUser)
 router.get('/me', protect, getMe)
-router.get('/all', protectRole, getUsers)
 
-module.exports = router
+// users
+router.get('/all', protectRole, getUsers)
+router.delete('/:id', protectRole, deleteUser)
+
+module.exports = router;

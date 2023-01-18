@@ -1,75 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { DangerBtn, PrimaryBtn, SecondaryBtn, Success } from '../components/button/button.stories';
-import { useNavigate } from 'react-router-dom';
-import UsersService from '../services/users.service';
+import { DangerBtn } from '../components/button/button.stories';
 import { Large } from '../components/input/input.stories';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, getUsers, reset } from '../features/users/userSlice';
+import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 export default function Users() {
 
-    const [users, setUsers] = useState([]),
+    const { users, isLoading, isError, message } = useSelector((state) => state.users),
+        { user } = useSelector((state) => state.auth),
         [query, setQuery] = useState(''),
-        apiUrl = process.env.REACT_APP_SERVER_URL,
-        examsRoute = process.env.REACT_APP_USERS_ROUTE,
-        defaultHeaders = { 'Content-Type': 'application/json' },
-        baseUrl = apiUrl + examsRoute,
-        navigate = useNavigate(),
-        usersService = new UsersService();
+        dispatch = useDispatch(),
+        navigate = useNavigate();
 
     useEffect(() => {
-        
-        usersService.getUsers()
-            .then(res => setUsers(res.data));
-    }, []);
-
-    const deleteUser = (userId) => {
-        usersService.deleteUser(userId)
-            .then(res => {
-                let updatedUsers = [...users];
-                setUsers(updatedUsers.filter(user => user.id !== userId));
-            });
-    }
-
-    const addUser = () => {
-        let newUser = {
-            fullName: 'Amir Maimon',
-            email: 'amiri7677@gmail.com'
+        if (isError) {
+            console.log(message)
         }
 
-        usersService.postUser({ ...newUser, id: 0 })
-            .then(res => setUsers([...users, res.data]));
+        if (!user) {
+            navigate('/login')
+        }
+
+        dispatch(getUsers());
+
+        return () => {
+            dispatch(reset())
+        }
+    }, [user, navigate, isError, message, dispatch]);
+
+    const deleteUserHandler = (usr) => {
+        dispatch(deleteUser(usr));
     }
 
-    const editUser = (user, data) => {
-        let newUser = {...user, fullName: 'hahasd' };
-        usersService(newUser)
-            .then(data => {
-                axios.get(baseUrl)
-                    .then(res => setUsers(res.data))
-                    .catch(err => console.log(err));
-            });
+    if (isLoading) {
+        return <Spinner />
     }
 
     return (
         <div className='App'>
             <div className='inline'>
                 <Large type='search' placeholder='Search User' onChange={event => setQuery(event.target.value)} />
-                <Success onClick={addUser}>Add User</Success>
             </div>
             <div className='row row-cols-md-3 g-4'>
-                {users && users
-                    .filter(user => query === '' ? user : (user.fullName.toLowerCase().includes(query.toLowerCase()) ? user : ''))
-                    .map(user => <div className='col card p-40' key={user.id}>
-                        <h1>{user.fullName}</h1>
-                        <div>{user.id}</div>
-                        <div>{user.email}</div>
-                        <SecondaryBtn onClick={() => navigate(`${user.id}`)}>Edit user</SecondaryBtn>
-                        <PrimaryBtn onClick={() => editUser(user)}>Edit name</PrimaryBtn>
-                        <DangerBtn onClick={() => deleteUser(user.id)}>Delete user</DangerBtn>
-                    </div>)
+                {users.length > 0 ? users
+                    .filter(u => query === '' ? u : (u.fullName.toLowerCase().includes(query.toLowerCase()) ? u : ''))
+                    .map(u => <div className='col card p-40' key={u._id}>
+                        <h1>{u.fullName}</h1>
+                        <div>Id: {u._id}</div>
+                        <div>Email: {u.email}</div>
+                        {user.role === 'manager' && u._id !== user._id ? <DangerBtn onClick={() => deleteUserHandler(u)}>Delete user</DangerBtn> : ''}
+                    </div>) : ''
                 }
             </div>
-
         </div>
     );
 }

@@ -125,7 +125,7 @@ export const examSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
-      }) /*  */
+      })
       .addCase(updateExam.pending, (state) => {
         state.isLoading = true
       })

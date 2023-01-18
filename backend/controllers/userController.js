@@ -4,8 +4,8 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 
 // @desc    Get All Users
-// @route   GET /api/users
-// @access  Private [role=manager]
+// @route   GET /api/v1/users
+// @access  Public [role=manager]
 const getUsers = asyncHandler(async (req, res, next) => {
   try {
     if (req.user.role === 'manager') {
@@ -19,8 +19,24 @@ const getUsers = asyncHandler(async (req, res, next) => {
   }
 })
 
+// @desc    Delete user
+// @route   DELETE /api/v1/users/:id
+// @access  Public [role=manager]
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found');
+  }
+
+  await user.remove();
+
+  res.status(200).json({ id: req.params.id })
+})
+
 // @desc    Register new user
-// @route   POST /api/users
+// @route   POST /api/v1/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, role } = req.body;
@@ -104,6 +120,7 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  deleteUser,
   getUsers,
   getMe,
 }

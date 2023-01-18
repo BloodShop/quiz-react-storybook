@@ -49,4 +49,4 @@ const examService = {
   updateExam,
 }
 
-export default examService
+export default examService;
