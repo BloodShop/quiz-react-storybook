@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
+    "install": "concurrently \"npm i \" \"cd ./frontend && npm install\"",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
