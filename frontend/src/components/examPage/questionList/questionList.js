@@ -29,8 +29,9 @@ export default function QuestionList({ examP }) {
     }, []);
 
     useEffect(() => {
-        setQuestionsLength(questions?.length);
-    }, [questions]);
+        setQuestions(exam.questions);
+        setQuestionsLength(exam.questions?.length);
+    }, [exam]);
 
     /* custom hook that provides previous props using useRef */
     const prevProp = usePrevious({ examSubmitted });
@@ -49,7 +50,7 @@ export default function QuestionList({ examP }) {
     }
 
     const removeHandler = (id) => {
-        let filteredQuestions = [...questions.filter(q => q.id !== id)],
+        let filteredQuestions = [...questions.filter(q => q._id !== id)],
             examToUpdate = {...exam};
         examToUpdate.questions = filteredQuestions;
         setQuestions(filteredQuestions);
@@ -71,7 +72,6 @@ export default function QuestionList({ examP }) {
     }
 
     const onSubmit = () => {
-
         const none = (arr, callback) => !arr.some(callback);
         let confirmed = true;
 
@@ -94,7 +94,6 @@ export default function QuestionList({ examP }) {
     const checkQuestions = (quests) => {
         let newCorrectAnswers = 0;
         quests.map(q => {
-
             let indexA = q.answers.findIndex(s => s.selected === true);
             if (indexA !== -1 && q.answers[indexA].txt === q.correctAnswer) {
                 newCorrectAnswers++;
@@ -109,14 +108,10 @@ export default function QuestionList({ examP }) {
     const onEditQuestion = (exam, newQuestion) => {
         let qToUpdate = exam.questions.find(q => q.id == newQuestion.id);
         qToUpdate = newQuestion;
-        /* service.putExam(exam)
-            .then((res) => console.log(res)); */
     }
 
-    // generate me a sample of angulare service
-
-    const editAndNavigate = (questionId) => {
-       navigate(`edit-question/${questionId}`, { state: { onEdit: onEditQuestion } })
+    const editAndNavigate = (id) => {
+       navigate(`edit-question/${id}`, { state: { onEdit: onEditQuestion } })
     }
 
     return (
@@ -125,7 +120,7 @@ export default function QuestionList({ examP }) {
                 {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
                         onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />) : null}
             </div>
-            {user.role === 'manager' || user.role === 'teacher' ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ?<Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
+            {user.role === 'manager' || user.role === 'teacher' ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );

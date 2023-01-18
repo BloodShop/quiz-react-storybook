@@ -49,7 +49,7 @@ export default function ExamsArchive() {
         <div className='App'>
             <div className='inline'>
                 <Large type='search' placeholder='Search Exam By Name' onChange={event => setQuery(event.target.value)} />
-                <Success onClick={(() => navigate('/add-exam'))}>Add Exam</Success>
+                {user.role !== 'student' ? <Success onClick={(() => navigate('/add-exam'))}>Add Exam</Success> : ''}
             </div>
             <div className={`row row-cols-md-3 g-4`}>
                 {exams.length > 0 ? exams

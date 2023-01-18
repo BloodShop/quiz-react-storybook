@@ -5,6 +5,8 @@ import { useAuth } from '../../auth/auth';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';
+import { useDispatch } from 'react-redux';
+import { getExamById, updateExam } from '../../../features/exams/examSlice';
 
 export default function EditQuestion() {
 
@@ -12,19 +14,21 @@ export default function EditQuestion() {
         auth = useAuth(),
         params = useParams(),
         navigate = useNavigate(),
+        dispatch = useDispatch(),
         { state } = useLocation(),
         [exam, setExam] = useState(),
         [question, setQuestion] = useState();
 
     useEffect(() => {
-        service.getExamById(params.id)
-            .then(res => setExam(res))
-            .catch(err => console.log(err))
-
+        dispatch(getExamById(params.id))
+            .then(res => setExam(res.payload));
+        // service.getExamById(params.id)
+        //     .then(res => setExam(res))
+        //     .catch(err => console.log(err))
     }, []);
 
     useEffect(() => {
-        setQuestion(structuredClone(exam?.questions?.find(q => q.id == params.id))); /* equallity by type && value */
+        setQuestion(exam?.questions?.find(q => q._id == params.qid)); /* equallity by type && value */
     }, [exam]);
 
     const editQuestionHandler = (e) => {
@@ -53,8 +57,9 @@ export default function EditQuestion() {
         let examToEdit = {...exam}
         let index = examToEdit.questions.indexOf(examToEdit.questions.find(q => q.id == question.id));
         examToEdit.questions[index] = question;
-        service.putExam(examToEdit)
-            .then((res) => console.log(res));
+        dispatch(updateExam(examToEdit));
+        // service.putExam(examToEdit)
+        //     .then((res) => console.log(res));
         navigate(`/exams/${exam.id}`)
     }
 

@@ -17,6 +17,7 @@ export default function Users() {
         usersService = new UsersService();
 
     useEffect(() => {
+        
         usersService.getUsers()
             .then(res => setUsers(res.data));
     }, []);
