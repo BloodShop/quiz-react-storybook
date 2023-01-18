@@ -50,7 +50,7 @@ export default function EditQuestion() {
     const editQuestion = () => {
         console.log(state);
 
-        let examToEdit = {...exam}
+        let examToEdit = {...structuredClone(exam)}
         let index = examToEdit.questions.indexOf(examToEdit.questions.find(q => q.id == question.id));
         examToEdit.questions[index] = question;
         dispatch(updateExam(examToEdit));

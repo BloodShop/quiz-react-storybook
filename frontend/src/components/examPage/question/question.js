@@ -8,13 +8,11 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
     const [currentAnswer, setCurrentAnswer] = useState();
 
     const onSelect = (e) => {
-        let selectedQ = {...question};
+        let selectedQ = {...structuredClone(question)};
         selectedQ.answers.map(s => { s.selected = false; });
 
         const selectedA = selectedQ.answers.find(answer => answer.txt === e.target.value);
         selectedA.selected = true;
-
-        console.log(e.target);
 
         setCurrentAnswer(e.target.value);
         onChange(selectedQ);

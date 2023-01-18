@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getExamById, updateExam } from '../../../features/exams/examSlice';
 /* import cloneDeep from 'lodash/cloneDeep'; */
 
-export default function QuestionList({ examP }) {
+export default function QuestionList({ examP, editMode }) {
 
     const { user } = useSelector((state) => state.auth),
         navigate = useNavigate(),
@@ -30,7 +30,7 @@ export default function QuestionList({ examP }) {
     useEffect(() => {
         setQuestions(exam.questions);
         setQuestionsLength(exam.questions?.length);
-    }, [exam]);
+    }, [dispatch, exam]);
 
     /* custom hook that provides previous props using useRef */
     const prevProp = usePrevious({ examSubmitted });
@@ -42,7 +42,7 @@ export default function QuestionList({ examP }) {
     }, [examSubmitted]);
 
     const changeHandler = (question) => {
-        let questionIndex = questions.findIndex(q => q.id === question.id);
+        let questionIndex = questions.findIndex(q => q._id === question._id);
         let newQuestions = [...questions];
         newQuestions[questionIndex] = question;
         setQuestions(newQuestions);
@@ -53,7 +53,8 @@ export default function QuestionList({ examP }) {
             examToUpdate = {...exam};
         examToUpdate.questions = filteredQuestions;
         setQuestions(filteredQuestions);
-        dispatch(updateExam(examToUpdate));
+        dispatch(updateExam(examToUpdate))
+            .then(data => setQuestions(data.payload.questions));
     }
 
     const addQuestionHandler = (question) => {
@@ -63,11 +64,11 @@ export default function QuestionList({ examP }) {
             question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
 
         const newQuestions = [...questions, question];
-        setQuestions(newQuestions);
         let examToUpdate = {...exam};
         examToUpdate.questions = newQuestions;
 
-        dispatch(updateExam(examToUpdate));
+        dispatch(updateExam(examToUpdate))
+            .then(data => setQuestions(data.payload.questions))
     }
 
     const onSubmit = () => {
@@ -115,11 +116,11 @@ export default function QuestionList({ examP }) {
 
     return (
         <>
-            <div className={`row row-cols-md-1 m-3 g-3 ${user.role !== 'student' || examSubmitted ? style.submitted : null}`}>
-                {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={index}
+            <div className={`row row-cols-md-1 m-3 g-3 ${(user.role !== 'student' && !editMode) || examSubmitted ? style.submitted : null}`}>
+                {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={question._id}
                         onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />) : null}
             </div>
-            {user.role === 'manager' || user.role === 'teacher' ? <AddQuestion onAdd={addQuestionHandler}/> : (!examSubmitted ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
+            {user.role === 'manager' || user.role === 'teacher' ? (editMode ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );

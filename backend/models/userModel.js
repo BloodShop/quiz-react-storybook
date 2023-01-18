@@ -19,11 +19,6 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add role'],
     },
-    /* exams: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'Exam',
-    }] */
   },
   {
     timestamps: true,

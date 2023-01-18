@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddExam from './pages/AddExam';
 import Users from './pages/Users';
 import io from 'socket.io-client';
+import Spinner from './components/Spinner';
 const LazyAbout = React.lazy(() => import('./pages/About'));
 
 const socket = io.connect('/');
@@ -34,7 +35,7 @@ export default function App() {
 
           <Route path='about'
             element={
-              <React.Suspense fallback='Loading...'>
+              <React.Suspense fallback={<Spinner />}>
                 <LazyAbout />
               </React.Suspense>
             } />
