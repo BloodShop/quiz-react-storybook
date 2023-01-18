@@ -13,21 +13,21 @@ export default function ExamsArchive() {
         navigate = useNavigate(),
         dispatch = useDispatch(),
         { user } = useSelector((state) => state.auth),
-        { exams, isLoading, isError, message } = useSelector((state) => state.exams)
+        { exams, isLoading, isError, message } = useSelector((state) => state.exams);
 
     useEffect(() => {
         if (isError) {
-            console.log(message)
+            console.log(message);
         }
 
         if (!user) {
-            navigate('/login')
+            navigate('/login');
         }
 
-        dispatch(getExams())
+        dispatch(getExams());
 
         return () => {
-            dispatch(reset())
+            dispatch(reset());
         }
     }, [user, navigate, isError, message, dispatch])
 

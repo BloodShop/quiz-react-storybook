@@ -4,7 +4,6 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
 import { store } from './app/store';
-import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 

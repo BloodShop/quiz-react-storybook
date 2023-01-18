@@ -2,12 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import examService from './examService';
 
 const initialState = {
-  exam: null,
-  exams: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: '',
+  exam: null,
+  exams: [],
 }
 
 // Create new exam
@@ -23,8 +23,8 @@ export const createExam = createAsyncThunk(
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 )
@@ -42,8 +42,8 @@ export const getExams = createAsyncThunk(
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 )
@@ -61,8 +61,8 @@ export const getExamById = createAsyncThunk(
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 )
@@ -72,16 +72,16 @@ export const deleteExam = createAsyncThunk(
   'exams/delete',
   async (id, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await examService.deleteExam(id, token)
+      const token = thunkAPI.getState().auth.user.token;
+      return await examService.deleteExam(id, token);
     } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 )
@@ -91,16 +91,16 @@ export const updateExam = createAsyncThunk(
   'exams/update',
   async (newExamData, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await examService.updateExam(newExamData, token)
+      const token = thunkAPI.getState().auth.user.token;
+      return await examService.updateExam(newExamData, token);
     } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 )
@@ -114,12 +114,25 @@ export const examSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = ''
-      // state.exams = []
-      // state.exam = state.exam ? state.exam : null
+      state.exams = []
+      state.exam = null
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getExamById.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getExamById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.exam = action.payload
+      })
+      .addCase(getExamById.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(createExam.pending, (state) => {
         state.isLoading = true
       })
@@ -172,19 +185,6 @@ export const examSlice = createSlice({
         )
       })
       .addCase(deleteExam.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-      })
-      .addCase(getExamById.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getExamById.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.exam = action.payload
-      })
-      .addCase(getExamById.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

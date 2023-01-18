@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import QuestionList from '../components/examPage/questionList/questionList'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getExamById, reset } from '../features/exams/examSlice';
@@ -21,13 +21,13 @@ export default function Exam() {
         if (!user) {
             navigate('/login');
         }
-        
+
         dispatch(getExamById(params.id));
 
         return () => {
             dispatch(reset());
         }
-    }, [ isError, message, navigate, dispatch]);
+    }, [user, navigate, isError, message, dispatch]);
 
     if(isLoading) {
         return <Spinner />
@@ -35,12 +35,14 @@ export default function Exam() {
 
     return (
         <>
-            {exam && <div className='App'>
+            <div className='App'>
+            {exam ? (<>
                 <header>
                     <h1>{exam.title}</h1>
                 </header>
                 <QuestionList examP={exam} />
-            </div>}
+            </>) : ''}
+            </div>
         </>
     );
 }

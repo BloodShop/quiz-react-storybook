@@ -21,6 +21,9 @@ export default function Header() {
       </div>
       {user ? <>
         <div className='logo'>
+          <Link to='/chat'>Chat</Link>
+        </div>
+        <div className='logo'>
           <Link to='/exams'>Exams</Link>
         </div>
         {user.role !== 'student' ? <><div className='logo'>

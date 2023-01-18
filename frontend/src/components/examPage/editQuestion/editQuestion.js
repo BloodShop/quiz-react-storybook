@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import ExamService from '../../../services/exams.service';
-import { useAuth } from '../../auth/auth';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';
@@ -10,9 +8,7 @@ import { getExamById, updateExam } from '../../../features/exams/examSlice';
 
 export default function EditQuestion() {
 
-    const service = new ExamService(),
-        auth = useAuth(),
-        params = useParams(),
+    const params = useParams(),
         navigate = useNavigate(),
         dispatch = useDispatch(),
         { state } = useLocation(),

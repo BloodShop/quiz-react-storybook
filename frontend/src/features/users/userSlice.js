@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import userService from './userService';
 
+// i would like to create a chat room with the other users on this technologies: react, socket.io and express , and also challenge them with an exam that will be added to their exams list
+
 const initialState = {
   users: [],
   isError: false,

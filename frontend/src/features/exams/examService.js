@@ -23,15 +23,15 @@ const getExams = async (token) => {
   return response.data
 }
 
-const getExamById = async (examId, token) => {
-  const response = await axios.get(API_URL + examId, config(token));
-  
+const getExamById = async (id, token) => {
+  const response = await axios.get(API_URL + id, config(token));
+
   return response.data;
 }
 
 // Delete user exam
-const deleteExam = async (examId, token) => {
-  const response = await axios.delete(API_URL + examId, config(token));
+const deleteExam = async (id, token) => {
+  const response = await axios.delete(API_URL + id, config(token));
 
   return response.data;
 }

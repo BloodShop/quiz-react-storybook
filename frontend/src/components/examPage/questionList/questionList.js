@@ -5,7 +5,6 @@ import Question from '../question/question';
 import style from '../question/question.module.css';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import usePrevious from '../customHooks/usePrevious';
-import ExamService from '../../../services/exams.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamById, updateExam } from '../../../features/exams/examSlice';
 /* import cloneDeep from 'lodash/cloneDeep'; */

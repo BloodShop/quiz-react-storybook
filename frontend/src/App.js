@@ -8,27 +8,24 @@ import Exam from './pages/Exam';
 import ExamsArchive from './pages/ExamsArchive';
 import Home from './pages/Home';
 import EditUser from './components/editUser/editUser';
-import { AuthProvider } from './components/auth/auth';
-import RequireAuth from './components/auth/requireAuth';
 import EditQuestion from './components/examPage/editQuestion/editQuestion';
 import Header from './components/Header';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Chat from './pages/Chat';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 import AddExam from './pages/AddExam';
 import Users from './pages/Users';
+import io from 'socket.io-client';
 const LazyAbout = React.lazy(() => import('./pages/About'));
 
-export default function App() {
-  /* const { token, setToken } = useToken(); */
+const socket = io.connect('/');
 
-  /* if(!token) {
-    return <Login setToken={setToken} />
-  } */
+export default function App() {
 
   return (
-    <AuthProvider>
+    <>
       <div className='container'>
         <Header />
         {/* <Navbar /> */}
@@ -61,11 +58,12 @@ export default function App() {
 
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
+          <Route path='chat' element={<Chat socket={socket} />} />
 
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </div>
       <ToastContainer />
-    </AuthProvider>
+    </>
   );
 }

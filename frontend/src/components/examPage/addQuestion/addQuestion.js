@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import ExamService from '../../../services/exams.service';
+import React, { useState } from 'react';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';

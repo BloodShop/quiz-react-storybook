@@ -1,18 +1,15 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import UsersService from '../../services/users.service';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function EditUser() {
 
     const params = useParams(),
-        [user, setUser] = useState(),
-        usersService = new UsersService();
+        [user, setUser] = useState();
 
     useEffect(() => {
-        usersService.getUserById(params.id)
+        /* usersService.getUserById(params.id)
             .then(res => setUser(res.data))
-            .catch(err => console.log(err));
+            .catch(err => console.log(err)); */
     }, []);
 
   return (
