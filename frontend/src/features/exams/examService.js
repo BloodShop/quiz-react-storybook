@@ -11,9 +11,9 @@ const config = (token) => {
 
 // Create new exam
 const createExam = async (examData, token) => {
-  const response = await axios.post(API_URL, examData, config(token))
+  const response = await axios.post(API_URL, examData, config(token));
 
-  return response.data
+  return response.data;
 }
 
 // Get user exams

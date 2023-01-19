@@ -25,8 +25,8 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
                 {isSubmitted &&
                     <>
                         {/*  ${isSubmitted ? style.display : style.non_display} */}
-                        <DangerBtn onClick={() => onRemove(question._id)}>Delete ❌</DangerBtn>
-                        <SecondaryBtn onClick={() => onEdit(question._id)}>Edit ✍️</SecondaryBtn>
+                        <button className='close' onClick={() => onRemove(question._id)}>❌</button>
+                        <button className='edit' onClick={() => onEdit(question._id)}>✍️</button>
                     </>
                 }
 
