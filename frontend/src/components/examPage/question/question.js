@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DangerBtn, SecondaryBtn } from '../../button/button.stories';
+import { CloseBtn, DangerBtn, EditBtn, SecondaryBtn } from '../../button/button.stories';
 import { RadioInput } from '../../input/input.stories';
 import style from './question.module.css';
 
@@ -24,9 +24,8 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
                 <h2 className='card-header'>{questionIndex + 1}. {question.title}</h2>
                 {isSubmitted &&
                     <>
-                        {/*  ${isSubmitted ? style.display : style.non_display} */}
-                        <button className='close' onClick={() => onRemove(question._id)}>❌</button>
-                        <button className='edit' onClick={() => onEdit(question._id)}>✍️</button>
+                        <CloseBtn onClick={() => onRemove(question._id)}>❌</CloseBtn>
+                        <EditBtn onClick={() => onEdit(question._id)}>✍️</EditBtn>
                     </>
                 }
 

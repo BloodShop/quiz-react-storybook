@@ -7,7 +7,6 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import usePrevious from '../customHooks/usePrevious';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamById, updateExam } from '../../../features/exams/examSlice';
-/* import cloneDeep from 'lodash/cloneDeep'; */
 
 export default function QuestionList({ examP, editMode }) {
 
