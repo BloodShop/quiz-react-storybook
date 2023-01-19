@@ -1,3 +1,7 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "editor.detectIndentation": true,
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 4
 }

@@ -42,17 +42,17 @@
 .danger {background-color: #f44336;} /* Red */
 .close {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 15px;
     cursor: pointer;
     border: none;
     background: none;
-  }
-  .edit {
+}
+.edit {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 40px;
     cursor: pointer;
     border: none;
     background: none;
-  }
+}

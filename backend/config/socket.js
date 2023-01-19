@@ -3,8 +3,8 @@ const { Server } = require('socket.io');
 const socketIO = (server) => {
     const io = new Server(server, {
         cors: {
-          origin: process.env.REACT_APP_URL,
-          methods: ['GET', 'POST']
+            origin: process.env.REACT_APP_URL,
+            methods: ['GET', 'POST']
         }
       });
 
