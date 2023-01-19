@@ -18,9 +18,9 @@ const createExam = async (examData, token) => {
 
 // Get user exams
 const getExams = async (token) => {
-  const response = await axios.get(API_URL, config(token))
+  const response = await axios.get(API_URL, config(token));
 
-  return response.data
+  return response.data;
 }
 
 const getExamById = async (id, token) => {
