@@ -14,6 +14,7 @@
   "author": "Alon Kolyakov",
   "license": "MIT",
   "dependencies": {
+    "@storybook/addon-controls": "^6.5.15",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

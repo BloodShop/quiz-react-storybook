@@ -13,8 +13,6 @@ export const PrimaryBtn = ({ children, ...rest }) => <Button variant='primary' {
 export const SecondaryBtn = ({ children, ...rest }) => <Button variant='secondary' { ...rest }>{children}</Button>
 export const Success = ({ children, ...rest }) => <Button variant='success' { ...rest }>{children}</Button>
 export const DangerBtn = ({ children, ...rest }) => <Button variant='danger' { ...rest }>{children}</Button>
-export const CloseBtn = ({ children, ...rest }) => <Button variant='close' { ...rest }>{children}</Button>
-export const EditBtn = ({ children, ...rest }) => <Button variant='edit' { ...rest }>{children}</Button>
 
 /* Args */
 const Template = args => <Button {...args} />

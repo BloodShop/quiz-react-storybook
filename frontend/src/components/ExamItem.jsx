@@ -1,7 +1,8 @@
 import React from "react";
 import Moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { CloseBtn, PrimaryBtn } from "./button/button.stories";
+import { PrimaryBtn } from "./button/button.stories";
+import { DeleteIcon } from "./Icon/icon.stories";
 
 export default function ExamItem({ exam, deleteExam }) {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function ExamItem({ exam, deleteExam }) {
                 <PrimaryBtn onClick={() => navigate(`${exam._id}`)}>
                     Quiz Me
                 </PrimaryBtn>
-                <CloseBtn onClick={() => deleteExam(exam._id)}>❌</CloseBtn>
+                <DeleteIcon onClick={() => deleteExam(exam._id)}>❌</DeleteIcon>
             </div>
         </div>
     );

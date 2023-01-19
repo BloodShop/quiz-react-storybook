@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import AddQuestion from '../addQuestion/addQuestion';
-import { Success } from '../../button/button.stories';
+import { PrimaryBtn, Success } from '../../button/button.stories';
 import Question from '../question/question';
 import style from '../question/question.module.css';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import usePrevious from '../customHooks/usePrevious';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamById, updateExam } from '../../../features/exams/examSlice';
+// import { SuccessBtn } from '../../chakraButton/chakraButton.stories';
 
 export default function QuestionList({ examP, editMode }) {
 
@@ -58,6 +59,7 @@ export default function QuestionList({ examP, editMode }) {
 
     const addQuestionHandler = (question) => {
         /* Question validation */
+        debugger
         if (question.title === '' || question.description === '' || question.answers.length !== 4 ||
             !question.answers.some(a => a.txt === question.correctAnswer) ||
             question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
@@ -119,7 +121,7 @@ export default function QuestionList({ examP, editMode }) {
                 {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={question._id}
                         onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />) : null}
             </div>
-            {user.role === 'manager' || user.role === 'teacher' ? (editMode ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <Success onClick={onSubmit} >Submit Exam ✅</Success> : '')}
+            {user.role === 'manager' || user.role === 'teacher' ? (editMode ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );

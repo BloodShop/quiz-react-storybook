@@ -121,20 +121,22 @@ export const examSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getExamById.pending, (state) => {
-        state.isLoading = true
+        if(!state.isLoading)
+          state.isLoading = true
       })
       .addCase(getExamById.fulfilled, (state, action) => {
-        state.isLoading = false
+        if(state.isLoading)
+          state.isLoading = false
         state.isSuccess = true
         state.exam = action.payload
       })
       .addCase(getExamById.rejected, (state, action) => {
-        state.isLoading = false
+        //state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
       .addCase(createExam.pending, (state) => {
-        state.isLoading = true
+       state.isLoading = true
       })
       .addCase(createExam.fulfilled, (state, action) => {
         state.isLoading = false

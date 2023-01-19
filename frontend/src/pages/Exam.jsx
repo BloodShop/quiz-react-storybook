@@ -11,14 +11,15 @@ export default function Exam() {
         dispatch = useDispatch(),
         navigate = useNavigate(),
         { user } = useSelector((state) => state.auth),
-        [exam, setExam] = useState(),
-        [editMode, setEditExam] = useState(false);
-    /* { exam, isLoading, isError, message } = useSelector((state) => state.exams); */
+        [editMode, setEditExam] = useState(false),
+        { exam, isLoading, message, isError } = useSelector(
+            (state) => state.exams
+        );
 
     useEffect(() => {
-        /* if (isError) {
+        if (isError) {
             console.log(message);
-        } */
+        }
 
         if (!user) {
             navigate("/login");
@@ -26,17 +27,15 @@ export default function Exam() {
             setEditExam(true);
         }
 
-        dispatch(getExamById(params.id)).then((data) => setExam(data.payload));
+        dispatch(getExamById(params.id));
 
         return () => {
             dispatch(reset());
         };
-    }, [user, dispatch]);
+    }, [user, dispatch, message, isError]);
 
     if (!exam) {
         return <Spinner />;
-    } else {
-        console.log(exam);
     }
 
     return (

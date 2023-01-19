@@ -15,7 +15,7 @@ export default {
 
 const Template = args => <Button {...args} />
 
-export const Success = Template.bind({});
+export const SuccessBtn = Template.bind({});
 Success.args = {
     colorScheme: 'green',
     children: 'Success',
