@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import AnswerInput from '../answerInput/answerInput';
 import './answerInputs.css';
+import { Increment, Decrement, reset } from '../../../features/counter/counterSlice';
+import { AddIcon, ResetIcon, SubIcon } from '../../Icon/icon.stories';
+import { useDispatch } from 'react-redux';
 
-export default function AnswerInputs({ onInput, question }) {
+export default function AnswerInputs({ numOfAnswers, onInput, question }) {
 
-  const [answers, setAnswers] = useState(question.answers);
+  const [answers, setAnswers] = useState(question.answers),
+    dispatch = useDispatch();
 
   useEffect(() => {
     setAnswers(question.answers);
@@ -13,19 +17,19 @@ export default function AnswerInputs({ onInput, question }) {
   return (
     <>
         <label className='col'>Answers:
-        {[0, 1, 2, 3].map((n, i) => <AnswerInput key={i} name={`answer${i}`} type='text'
+          <AddIcon onClick={() => dispatch(Increment())}/>
+          <SubIcon onClick={() => dispatch(Decrement())}/>
+          <ResetIcon onClick={() => dispatch(reset())}/>
+        {[...Array(numOfAnswers)].map((n, i) => <AnswerInput key={i} name={`answer${i}`} type='text'
           onInput={onInput} value={answers[i] ? answers[i]?.txt : ''} />)}
         </label>
         <label className='col'>
           Correct Answer:
           <select className='select-box' name='correctAnswer' value={question.correctAnswer} onInput={onInput}>
-            {[0, 1, 2, 3].map((n, i) => <option key={i} onInput={onInput} value={answers[i]?.txt}>{answers[i]?.txt}</option>)}
+            <option>--- Please Select ---</option>
+            {[...Array(numOfAnswers)].map((n, i) => <option key={i} onInput={onInput} value={answers[i]?.txt}>{answers[i]?.txt}</option>)}
           </select>
         </label>
-
-        {/* <label className='m-2'>Correct Answer:
-            <AnswerInput name='correctAnswer' type='text' onInput={onInput} value={question.correctAnswer}/>
-        </label> */}
     </>
   )
 }

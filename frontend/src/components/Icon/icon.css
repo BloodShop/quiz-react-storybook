@@ -15,8 +15,6 @@
     position: absolute;
     top: 5px;
     right: 15px;
-    cursor: pointer;
-    border: none;
     background: none;
 }
 
@@ -25,11 +23,24 @@
     position: absolute;
     top: 5px;
     right: 60px;
-    cursor: pointer;
-    border: none;
     background: none;
 }
 
 .default {
 
+}
+
+.reset {
+    font-size: 30px;
+    background: none;
+}
+
+.add {
+    font-size: 30px;
+    background: none;
+}
+
+.substract {
+    font-size: 30px;
+    background: none;
 }

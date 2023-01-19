@@ -6,7 +6,8 @@ import style from '../question/question.module.css';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import usePrevious from '../customHooks/usePrevious';
 import { useDispatch, useSelector } from 'react-redux';
-import { getExamById, updateExam } from '../../../features/exams/examSlice';
+import { getExamById } from '../../../features/exams/singleExamSlice';
+import { updateExam } from '../../../features/exams/examSlice';
 // import { SuccessBtn } from '../../chakraButton/chakraButton.stories';
 
 export default function QuestionList({ examP, editMode }) {
@@ -57,10 +58,10 @@ export default function QuestionList({ examP, editMode }) {
             .then(data => setQuestions(data.payload.questions));
     }
 
-    const addQuestionHandler = (question) => {
+    const addQuestionHandler = (question, numOfAnswers) => {
         /* Question validation */
         debugger
-        if (question.title === '' || question.description === '' || question.answers.length !== 4 ||
+        if (question.title === '' || question.description === '' || question.answers.filter(a => a.txt !== '').length !== numOfAnswers ||
             !question.answers.some(a => a.txt === question.correctAnswer) ||
             question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
 
@@ -111,7 +112,7 @@ export default function QuestionList({ examP, editMode }) {
         qToUpdate = newQuestion;
     }
 
-    const editAndNavigate = (id) => {
+    const editAndNavigate = (id, counter) => {
        navigate(`edit-question/${id}`, { state: { onEdit: onEditQuestion } })
     }
 

@@ -3,29 +3,41 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';
-import { useDispatch } from 'react-redux';
-import { getExamById, updateExam } from '../../../features/exams/examSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getExamById } from '../../../features/exams/singleExamSlice';
+import { updateExam } from '../../../features/exams/examSlice';
+import TextArea from '../../textArea/textArea';
+import { SetCounter } from '../../../features/counter/counterSlice';
+import Spinner from '../../Spinner';
 
 export default function EditQuestion() {
 
     const params = useParams(),
+        { state } = useLocation(),
         navigate = useNavigate(),
         dispatch = useDispatch(),
-        { state } = useLocation(),
-        [exam, setExam] = useState(),
-        [question, setQuestion] = useState();
+        // [exam, setExam] = useState(null),
+        { exam, isLoading, message, isError } = useSelector(state => state.exam),
+        [question, setQuestion] = useState(null),
+        { counter } = useSelector(state => state.counter);
 
     useEffect(() => {
-        dispatch(getExamById(params.id))
-            .then(res => setExam(res.payload));
-        // service.getExamById(params.id)
-        //     .then(res => setExam(res))
-        //     .catch(err => console.log(err))
-    }, []);
+        if (isError) {
+            console.log(message);
+        }
 
-    useEffect(() => {
-        setQuestion(exam?.questions?.find(q => q._id == params.qid)); /* equallity by type && value */
-    }, [exam]);
+        if (params && !exam) {
+            dispatch(getExamById(params.id));
+        }
+
+        if (exam) {
+            setQuestion(exam?.questions?.find(q => q._id == params.qid)); /* equallity by type && value */
+        }
+
+        if (question) {
+            dispatch(SetCounter(question.answers.length));
+        }
+    }, [params, exam, question, isError, message, dispatch]);
 
     const editQuestionHandler = (e) => {
 
@@ -54,9 +66,11 @@ export default function EditQuestion() {
         let index = examToEdit.questions.indexOf(examToEdit.questions.find(q => q.id == question.id));
         examToEdit.questions[index] = question;
         dispatch(updateExam(examToEdit));
-        // service.putExam(examToEdit)
-        //     .then((res) => console.log(res));
         navigate(`/exams/${exam.id}`)
+    }
+
+    if (!question || isLoading || counter < 2) {
+        return <Spinner />
     }
 
     return (
@@ -68,8 +82,8 @@ export default function EditQuestion() {
                         <Large name='title' type='text' onInput={editQuestionHandler} value={question.title} />
                     </label>
                     <label className='m-2 p-1' htmlFor='description'>Description:</label>
-                    <textarea className='m-2' value={question.description} name='description' onInput={editQuestionHandler} />
-                    <AnswerInputs onInput={editQuestionHandler} question={question} />
+                    <TextArea className='m-2' value={question.description} name='description' onInput={editQuestionHandler} />
+                    <AnswerInputs numOfAnswers={counter} onInput={editQuestionHandler} question={question} />
                     <PrimaryBtn onClick={editQuestion}>Edit Question</PrimaryBtn>
                 </div>
             }

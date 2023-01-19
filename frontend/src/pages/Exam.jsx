@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QuestionList from "../components/examPage/questionList/questionList";
 import { useNavigate, useParams } from "react-router-dom";
-import { getExamById, reset } from "../features/exams/examSlice";
+import { getExamById, reset } from "../features/exams/singleExamSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/Spinner";
 import { PrimaryBtn } from "../components/button/button.stories";
@@ -13,7 +13,7 @@ export default function Exam() {
         { user } = useSelector((state) => state.auth),
         [editMode, setEditExam] = useState(false),
         { exam, isLoading, message, isError } = useSelector(
-            (state) => state.exams
+            (state) => state.exam
         );
 
     useEffect(() => {
@@ -32,9 +32,9 @@ export default function Exam() {
         return () => {
             dispatch(reset());
         };
-    }, [user, dispatch, message, isError]);
+    }, [user, dispatch, message, isError, navigate]);
 
-    if (!exam) {
+    if (isLoading && !exam) {
         return <Spinner />;
     }
 

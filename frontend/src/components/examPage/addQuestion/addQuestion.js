@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';
+import { useDispatch, useSelector } from "react-redux";
+import TextArea from '../../textArea/textArea';
 
 export default function AddQuestion({ onAdd }) {
 
@@ -10,7 +12,8 @@ export default function AddQuestion({ onAdd }) {
             description: '',
             answers: [,,,],
             correctAnswer: ''
-        });
+        }),
+        { counter } = useSelector(state => state.counter);
 
     const addQuestionHandler = (e) => {
         const newQuestion = {...structuredClone(question)},
@@ -38,9 +41,9 @@ export default function AddQuestion({ onAdd }) {
                 <Large name='title' type='text' onInput={addQuestionHandler} />
             </label>
             <label className='m-2 p-1' htmlFor='description'>Description:</label>
-                <textarea className='m-2' name='description' onInput={addQuestionHandler} />
-            <AnswerInputs onInput={addQuestionHandler} question={question} />
-            <PrimaryBtn onClick={() => onAdd(question)}>Add Question</PrimaryBtn>
+                <TextArea className='m-2' name='description' onInput={addQuestionHandler} />
+            <AnswerInputs numOfAnswers={counter} onInput={addQuestionHandler} question={question} />
+            <PrimaryBtn onClick={() => onAdd(question, counter)}>Add Question</PrimaryBtn>
         </div>
     );
 }
