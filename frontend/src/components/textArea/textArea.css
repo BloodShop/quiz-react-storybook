@@ -1,0 +1,18 @@
+textarea {
+    width: 100%; /* adjust to the width you want */
+    height: 200px; /* adjust to the height you want */
+    padding: 12px 20px; /* add padding to the textarea */
+    border: 2px solid #ccc; /* add a 2px solid gray border */
+    border-radius: 4px; /* add rounded corners to the textarea */
+    background-color: #f8f8f8; /* add a light gray background color */
+    font-size: 18px; /* adjust the font size */
+    font-family: Arial, sans-serif; /* choose a font */
+    resize: vertical; /* allow the textarea to be resized vertically */
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2); /* add a subtle box shadow */
+  }
+
+  /* Add some hover effect */
+  textarea:hover {
+    border: 2px solid #555; /* change the border color on hover */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* increase the box shadow on hover */
+  }
