@@ -48,8 +48,12 @@ export default function Exam() {
                             <h1>{exam.title}</h1>
                         </header>
                         {user.role === "manager" || user.role === "teacher" ? (
-                            <PrimaryBtn onClick={() => setEditExam(!editMode)}>
-                                edit / quiz
+                            <PrimaryBtn
+                                onClick={() => {
+                                    setEditExam(!editMode);
+                                }}
+                            >
+                                {editMode ? "editMode" : "quizMode"}
                             </PrimaryBtn>
                         ) : (
                             ""
