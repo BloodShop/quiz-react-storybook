@@ -22,6 +22,10 @@ cd ..
 npm run dev
 ```
 
+## User access with built in exams:
+> email: koliakovcr7@gmail.com
+password: 12345
+
 # Available Scripts
 
 ## In the backend directory, you can run:
