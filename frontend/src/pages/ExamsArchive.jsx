@@ -41,7 +41,7 @@ export default function ExamsArchive() {
     }
 
     return (
-        <div className="App">
+        <div className="container">
             <div className="inline">
                 <Large
                     type="search"

@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <>
-      <div className='container'>
+      <header className='showcase'>
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -58,7 +58,7 @@ export default function App() {
 
           <Route path='*' element={<NoMatch />} />
         </Routes>
-      </div>
+      </header>
       <ToastContainer />
     </>
   );
