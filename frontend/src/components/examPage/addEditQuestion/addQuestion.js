@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AnswerInputs from '../answerInputs/answerInputs';
 import { PrimaryBtn } from '../../button/button.stories';
 import { Large } from '../../input/input.stories';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TextArea from '../../textArea/textArea';
 
 export default function AddQuestion({ onAdd }) {
@@ -10,7 +10,7 @@ export default function AddQuestion({ onAdd }) {
     const [question, setQuestion] = useState({
             title: '',
             description: '',
-            answers: [,,,],
+            answers: [],
             correctAnswer: ''
         }),
         { counter } = useSelector(state => state.counter);

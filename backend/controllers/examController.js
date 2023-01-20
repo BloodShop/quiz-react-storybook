@@ -15,7 +15,8 @@ const getExams = asyncHandler(async (req, res) => {
 // @route   GET /api/exams/:id
 // @access  Public
 const getExamById = asyncHandler(async (req, res) => {
-  const exam = await Exam.findOne({ user: req.user.id, id: req.body.id });
+  const exam = await Exam.findOne({ user: req.user.id, _id: req.params.id });
+
   res.status(200).json(exam);
 })
 

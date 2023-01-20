@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AddQuestion from '../addQuestion/addQuestion';
+import AddQuestion from '../addEditQuestion/addQuestion';
 import { PrimaryBtn, Success } from '../../button/button.stories';
 import Question from '../question/question';
 import style from '../question/question.module.css';
@@ -8,6 +8,7 @@ import usePrevious from '../customHooks/usePrevious';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamById } from '../../../features/exams/singleExamSlice';
 import { updateExam } from '../../../features/exams/examSlice';
+import ValidQuestion from '../addEditQuestion/questionValidation';
 // import { SuccessBtn } from '../../chakraButton/chakraButton.stories';
 
 export default function QuestionList({ examP, editMode }) {
@@ -59,11 +60,10 @@ export default function QuestionList({ examP, editMode }) {
     }
 
     const addQuestionHandler = (question, numOfAnswers) => {
-        /* Question validation */
         debugger
-        if (question.title === '' || question.description === '' || question.answers.filter(a => a.txt !== '').length !== numOfAnswers ||
-            !question.answers.some(a => a.txt === question.correctAnswer) ||
-            question.answers.length !== new Set(question.answers.map(a => a.txt)).size) return;
+        const filteredAnswers = question.answers.filter(a => a.txt !== '');
+        question.answers = filteredAnswers;
+        if (!ValidQuestion(question, numOfAnswers)) return;
 
         const newQuestions = [...questions, question];
         let examToUpdate = {...exam};
@@ -122,7 +122,7 @@ export default function QuestionList({ examP, editMode }) {
                 {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={question._id}
                         onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />) : null}
             </div>
-            {user.role === 'manager' || user.role === 'teacher' ? (editMode ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : '')}
+            {user.role === 'manager' || user.role === 'teacher' ? (editMode && questions?.length > 0 ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : '')}
             {examSubmitted && <Outlet key={location.pathname}/>}
         </>
     );

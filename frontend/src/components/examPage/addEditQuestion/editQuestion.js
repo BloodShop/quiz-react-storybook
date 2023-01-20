@@ -9,6 +9,7 @@ import { updateExam } from '../../../features/exams/examSlice';
 import TextArea from '../../textArea/textArea';
 import { SetCounter } from '../../../features/counter/counterSlice';
 import Spinner from '../../Spinner';
+import ValidQuestion from './questionValidation';
 
 export default function EditQuestion() {
 
@@ -16,7 +17,6 @@ export default function EditQuestion() {
         { state } = useLocation(),
         navigate = useNavigate(),
         dispatch = useDispatch(),
-        // [exam, setExam] = useState(null),
         { exam, isLoading, message, isError } = useSelector(state => state.exam),
         [question, setQuestion] = useState(null),
         { counter } = useSelector(state => state.counter);
@@ -31,17 +31,15 @@ export default function EditQuestion() {
         }
 
         if (exam) {
-            setQuestion(exam?.questions?.find(q => q._id == params.qid)); /* equallity by type && value */
+            const quest = exam?.questions?.find(q => q._id == params.qid);
+            setQuestion(quest); /* equallity by type && value */
+            dispatch(SetCounter(quest.answers?.length));
         }
-
-        if (question) {
-            dispatch(SetCounter(question.answers.length));
-        }
-    }, [params, exam, question, isError, message, dispatch]);
+    }, [params, exam, isError, message]);
 
     const editQuestionHandler = (e) => {
-
-        const newQuestion = {...structuredClone(question)},
+        debugger
+        const newQuestion = { ...structuredClone(question) },
             txt = e.target.value;
 
         if (e.target.name.includes('answer')) {
@@ -49,8 +47,10 @@ export default function EditQuestion() {
 
             console.log('!!!!!!', num, newQuestion['answers'][num]);
 
-            if (num) {
-                newQuestion['answers'][num] = { txt: txt, selected: false };
+            if (num && newQuestion['answers'][num]) {
+                newQuestion['answers'][num] = { txt: txt, selected: false, _id: (newQuestion['answers'][num]._id) };
+            } else {
+                newQuestion['answers'].push({ txt: txt, selected: false })
             }
         } else {
             newQuestion[e.target.name] = txt;
@@ -60,13 +60,13 @@ export default function EditQuestion() {
     }
 
     const editQuestion = () => {
-        console.log(state);
+        if(!ValidQuestion(question, counter)) return;
 
-        let examToEdit = {...structuredClone(exam)}
+        let examToEdit = { ...structuredClone(exam) }
         let index = examToEdit.questions.indexOf(examToEdit.questions.find(q => q.id == question.id));
         examToEdit.questions[index] = question;
         dispatch(updateExam(examToEdit));
-        navigate(`/exams/${exam.id}`)
+        navigate(`/exams/${exam._id}`);
     }
 
     if (!question || isLoading || counter < 2) {

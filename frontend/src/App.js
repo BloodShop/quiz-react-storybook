@@ -1,14 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Routes } from 'react-router-dom';
-import AddQuestion from './components/examPage/addQuestion/addQuestion';
+import AddQuestion from './components/examPage/addEditQuestion/addQuestion';
 import ExamResult from './components/examPage/examResult/examResult';
 import NoMatch from './components/noMatch/noMatch';
 import Exam from './pages/Exam';
 import ExamsArchive from './pages/ExamsArchive';
 import Home from './pages/Home';
 import EditUser from './components/editUser/editUser';
-import EditQuestion from './components/examPage/editQuestion/editQuestion';
+import EditQuestion from './components/examPage/addEditQuestion/editQuestion';
 import Header from './components/Header';
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -29,7 +29,6 @@ export default function App() {
     <>
       <div className='container'>
         <Header />
-        {/* <Navbar /> */}
         <Routes>
           <Route path='/' element={<Home />} />
 
@@ -40,11 +39,7 @@ export default function App() {
               </React.Suspense>
             } />
 
-          <Route path='exams' element={<ExamsArchive />}>
-            {/* <Route index element={< />} />
-            <Route path='featured' element={<FeaturedExams />} />
-            <Route path='new' element={<NewExams />} /> */}
-          </Route>
+          <Route path='exams' element={<ExamsArchive />} />
 
           <Route path='exams/:id' element={<Exam />} />
 

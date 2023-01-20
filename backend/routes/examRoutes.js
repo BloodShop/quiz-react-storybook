@@ -14,8 +14,8 @@ router.route('/')
   .get(protect, getExams)
   .post(protect, setExam);
 router.route('/:id')
+  .get(protect, getExamById)
   .delete(protect, deleteExam)
   .put(protect, updateExam)
-  .get(protect, getExamById);
 
 module.exports = router

@@ -11,7 +11,7 @@ export default function Exam() {
         dispatch = useDispatch(),
         navigate = useNavigate(),
         { user } = useSelector((state) => state.auth),
-        [editMode, setEditExam] = useState(false),
+        [editMode, setEditMode] = useState(false),
         { exam, isLoading, message, isError } = useSelector(
             (state) => state.exam
         );
@@ -24,7 +24,7 @@ export default function Exam() {
         if (!user) {
             navigate("/login");
         } else if (user.role === "teacher" || user.role === "manager") {
-            setEditExam(true);
+            setEditMode(true);
         }
 
         dispatch(getExamById(params.id));
@@ -32,9 +32,9 @@ export default function Exam() {
         return () => {
             dispatch(reset());
         };
-    }, [user, dispatch, message, isError, navigate]);
+    }, [user, dispatch, isError, message, navigate]);
 
-    if (isLoading && !exam) {
+    if (!exam) {
         return <Spinner />;
     }
 
@@ -49,7 +49,7 @@ export default function Exam() {
                         {user.role === "manager" || user.role === "teacher" ? (
                             <PrimaryBtn
                                 onClick={() => {
-                                    setEditExam(!editMode);
+                                    setEditMode(!editMode);
                                 }}
                             >
                                 {editMode ? "editMode" : "quizMode"}

@@ -6,7 +6,6 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
-  /* exam: null, */
   exams: [],
 }
 
@@ -47,25 +46,6 @@ export const getExams = createAsyncThunk(
     }
   }
 )
-
-/* // Get user's exam by id
-export const getExamById = createAsyncThunk(
-  'exams/getOne',
-  async (id, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await examService.getExamById(id, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-) */
 
 // Delete user's exam
 export const deleteExam = createAsyncThunk(
@@ -115,26 +95,10 @@ export const examSlice = createSlice({
       state.isError = false
       state.message = ''
       state.exams = []
-      /* state.exam = null */
     },
   },
   extraReducers: (builder) => {
     builder
-      /* .addCase(getExamById.pending, (state) => {
-        if(!state.isLoading)
-          state.isLoading = true
-      })
-      .addCase(getExamById.fulfilled, (state, action) => {
-        if(state.isLoading)
-          state.isLoading = false
-        state.isSuccess = true
-        state.exam = action.payload
-      })
-      .addCase(getExamById.rejected, (state, action) => {
-        //state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-      }) */
       .addCase(createExam.pending, (state) => {
        state.isLoading = true
       })
