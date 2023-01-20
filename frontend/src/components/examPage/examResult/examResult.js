@@ -9,7 +9,6 @@ export default function ExamResult() {
         [totalQuestions, setTotalQuestions] = useState();
 
     useEffect(() => {
-        console.log(state);
         if (!state?.formSubmitted) {
             navigate(-1);
         } else {

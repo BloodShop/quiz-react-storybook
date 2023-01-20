@@ -19,7 +19,7 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
     }
 
     return (
-        <div className='col card p-40'>
+        <div key={question._id} className='col card p-40'>
             <div>
                 <h2 className='card-header'>{questionIndex + 1}. {question.title}</h2>
                 {isSubmitted &&
@@ -33,7 +33,7 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
             <h2 className='lead mx-auto'>{question.description}</h2>
 
             <div className='btn-group btn-group-vertical'>
-                {question.answers.map((answer, index) => <label key={Math.random()*10000}>
+                {question.answers.map((answer) => <label key={answer._id}>
                         <RadioInput value={answer.txt} checked={currentAnswer===answer.txt} onChange={onSelect}/><i className={question.correctAnswer === answer.txt ? style.correct : style.wrong}><span>{answer.txt}</span></i>
                     </label>)}
             </div>

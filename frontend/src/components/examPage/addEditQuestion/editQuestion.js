@@ -10,16 +10,17 @@ import TextArea from '../../textArea/textArea';
 import { SetCounter } from '../../../features/counter/counterSlice';
 import Spinner from '../../Spinner';
 import ValidQuestion from './questionValidation';
+import {v4 as uuid} from 'uuid'
 
 export default function EditQuestion() {
 
     const params = useParams(),
-        { state } = useLocation(),
-        navigate = useNavigate(),
-        dispatch = useDispatch(),
-        { exam, isLoading, message, isError } = useSelector(state => state.exam),
-        [question, setQuestion] = useState(null),
-        { counter } = useSelector(state => state.counter);
+    navigate = useNavigate(),
+    dispatch = useDispatch(),
+    { exam, isLoading, message, isError } = useSelector(state => state.exam),
+    [question, setQuestion] = useState(null),
+    { counter } = useSelector(state => state.counter),
+    { state } = useLocation();
 
     useEffect(() => {
         if (isError) {
@@ -38,7 +39,6 @@ export default function EditQuestion() {
     }, [params, exam, isError, message]);
 
     const editQuestionHandler = (e) => {
-        debugger
         const newQuestion = { ...structuredClone(question) },
             txt = e.target.value;
 
@@ -48,9 +48,9 @@ export default function EditQuestion() {
             console.log('!!!!!!', num, newQuestion['answers'][num]);
 
             if (num && newQuestion['answers'][num]) {
-                newQuestion['answers'][num] = { txt: txt, selected: false, _id: (newQuestion['answers'][num]._id) };
+                newQuestion['answers'][num] = { txt: txt, selected: false, _id: newQuestion['answers'][num]._id };
             } else {
-                newQuestion['answers'].push({ txt: txt, selected: false })
+                newQuestion['answers'].push({ txt: txt, selected: false/* , _id: uuid() */ })
             }
         } else {
             newQuestion[e.target.name] = txt;
@@ -60,6 +60,7 @@ export default function EditQuestion() {
     }
 
     const editQuestion = () => {
+        debugger
         if(!ValidQuestion(question, counter)) return;
 
         let examToEdit = { ...structuredClone(exam) }

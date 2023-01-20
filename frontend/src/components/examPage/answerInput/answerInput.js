@@ -1,8 +1,8 @@
 import React from 'react';
 import { Small } from '../../input/input.stories';
 
-export default function AnswerInput({ name, type, onInput, value }) {
+export default function AnswerInput({ key, name, type, onInput, value }) {
   return (
-    <Small name={name} type={type} onInput={onInput} value={value} />
+    <Small key={key} name={name} type={type} onInput={onInput} value={value} />
   );
 }

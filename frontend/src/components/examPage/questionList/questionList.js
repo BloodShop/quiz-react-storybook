@@ -21,7 +21,7 @@ export default function QuestionList({ examP, editMode }) {
         [exam, setExam] = useState(examP),
         [correctAnswers, setCorrectAnswer] = useState(0),
         [questions, setQuestions] = useState(exam.questions),
-        [questionsLength, setQuestionsLength] = useState(),
+        [questionsLength, setQuestionsLength] = useState(exam.questions.length),
         [examSubmitted, setExamSubmitted] = useState(false);
 
     useEffect(() => {
@@ -31,12 +31,13 @@ export default function QuestionList({ examP, editMode }) {
 
     useEffect(() => {
         setQuestions(exam.questions);
-        setQuestionsLength(exam.questions?.length);
-    }, [dispatch, exam]);
+        /* setQuestionsLength(exam.questions?.length); */
+    }, [dispatch, exam/* , questions */]);
 
     /* custom hook that provides previous props using useRef */
     const prevProp = usePrevious({ examSubmitted });
     useEffect(() => {
+        debugger
         if (prevProp && examSubmitted) {
             console.log(`${correctAnswers} / ${questionsLength}`);
             navigate('result', { state: { correctAnswers: correctAnswers, totalQuestions: questionsLength, formSubmitted: examSubmitted } });
@@ -60,7 +61,6 @@ export default function QuestionList({ examP, editMode }) {
     }
 
     const addQuestionHandler = (question, numOfAnswers) => {
-        debugger
         const filteredAnswers = question.answers.filter(a => a.txt !== '');
         question.answers = filteredAnswers;
         if (!ValidQuestion(question, numOfAnswers)) return;
@@ -74,6 +74,7 @@ export default function QuestionList({ examP, editMode }) {
     }
 
     const onSubmit = () => {
+        debugger
         const none = (arr, callback) => !arr.some(callback);
         let confirmed = true;
 
@@ -89,7 +90,8 @@ export default function QuestionList({ examP, editMode }) {
 
         if (confirmed) {
             checkQuestions(questions);
-            setExamSubmitted(true)
+            setQuestionsLength(questions.length)
+            setExamSubmitted(true);
         }
     }
 
@@ -112,18 +114,17 @@ export default function QuestionList({ examP, editMode }) {
         qToUpdate = newQuestion;
     }
 
-    const editAndNavigate = (id, counter) => {
+    const editAndNavigate = (id) => {
        navigate(`edit-question/${id}`, { state: { onEdit: onEditQuestion } })
     }
 
     return (
         <>
             <div className={`row row-cols-md-1 m-3 g-3 ${(user.role !== 'student' && !editMode) || examSubmitted ? style.submitted : null}`}>
-                {questions ? questions.map((question, index) => <Question question={question} questionIndex={index} key={question._id}
-                        onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!(user.role === 'manager' || user.role === 'teacher' ? style.submitted : null)} />) : null}
+                {questions && questions.map((question, index) => <Question question={question} questionIndex={index} key={question._id} onChange={changeHandler} onRemove={removeHandler} onEdit={editAndNavigate} isSubmitted={!!((user.role === 'manager' || user.role === 'teacher') && style.submitted)} />)}
             </div>
-            {user.role === 'manager' || user.role === 'teacher' ? (editMode && questions?.length > 0 ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : <AddQuestion onAdd={addQuestionHandler}/>) : (!examSubmitted ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : '')}
-            {examSubmitted && <Outlet key={location.pathname}/>}
+            {user.role === 'manager' || user.role === 'teacher' ? (editMode && questions?.length > 0 ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : <AddQuestion onAdd={addQuestionHandler} />) : (!examSubmitted ? <PrimaryBtn onClick={onSubmit} >Submit Exam ✅</PrimaryBtn> : '')}
+            {examSubmitted && <Outlet key={location.pathname} />}
         </>
     );
 }
