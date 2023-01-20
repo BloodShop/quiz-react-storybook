@@ -34,7 +34,7 @@ export default function Question({ question, questionIndex, onChange, onRemove, 
 
             <div className='btn-group btn-group-vertical'>
                 {question.answers.map((answer) => <label key={answer._id}>
-                        <RadioInput value={answer.txt} checked={currentAnswer===answer.txt} onChange={onSelect}/><i className={question.correctAnswer === answer.txt ? style.correct : style.wrong}><span>{answer.txt}</span></i>
+                        <RadioInput key={answer._id} value={answer.txt} checked={currentAnswer===answer.txt} onChange={onSelect}/><i className={question.correctAnswer === answer.txt ? style.correct : style.wrong}><span>{answer.txt}</span></i>
                     </label>)}
             </div>
         </div>
