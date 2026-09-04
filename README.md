@@ -53,3 +53,6 @@ Runs the storybook tool for UI development.
 ### `npm run build-storybook`
 Build a storybook static file.
 
+
+
+<!-- Security scan triggered at 2026-09-04 13:02:32 -->
